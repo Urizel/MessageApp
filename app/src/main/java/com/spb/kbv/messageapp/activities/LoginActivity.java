@@ -10,7 +10,12 @@ import com.spb.kbv.messageapp.fragments.LoginFragment;
 public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginFragment.Callbacks {
 
     private static final int REQUEST_NARROW_LOGIN = 1;
+    private static final int REQUEST_REGISTER = 2;
+    private static final int REQUEST_EXTERNAL_LOGIN = 3;
     private View loginButton;
+    private View registerButton;
+    private View googleLoginButton;
+    private View facebookLoginButton;
 
 
     @Override
@@ -18,9 +23,15 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_login);
         loginButton = findViewById(R.id.activity_login_login);
+        registerButton = findViewById(R.id.activity_login_register);
+        googleLoginButton = findViewById(R.id.activity_login_google);
+        facebookLoginButton = findViewById(R.id.activity_login_facebook);
         if (loginButton != null) {
             loginButton.setOnClickListener(this);
         }
+        registerButton.setOnClickListener(this);
+        googleLoginButton.setOnClickListener(this);
+        facebookLoginButton.setOnClickListener(this);
     }
 
 
@@ -28,6 +39,18 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
     public void onClick(View view) {
         if (view == loginButton)
             startActivityForResult(new Intent(this, LoginNarrowActivity.class), REQUEST_NARROW_LOGIN);
+        else if (view == registerButton)
+            startActivityForResult(new Intent(this, RegisterActivity.class), REQUEST_REGISTER);
+        else if (view == googleLoginButton)
+            doExternalLogin("Google");
+        else if (view == facebookLoginButton)
+            doExternalLogin("Facebook");
+    }
+
+    private void doExternalLogin(String externalService) {
+        Intent intent = new Intent(this, ExternalLoginActivity.class);
+        intent.putExtra(ExternalLoginActivity.EXTRA_EXTERNAL_SERVICE, externalService);
+        startActivityForResult(intent, REQUEST_EXTERNAL_LOGIN);
     }
 
     @Override
@@ -35,7 +58,9 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         if (resultCode != RESULT_OK)
             return;
 
-        if (requestCode == REQUEST_NARROW_LOGIN)
+        if (requestCode == REQUEST_NARROW_LOGIN ||
+                requestCode == REQUEST_REGISTER ||
+                requestCode == REQUEST_EXTERNAL_LOGIN)
             finishLogin();
     }
 
