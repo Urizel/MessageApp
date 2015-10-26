@@ -39,6 +39,7 @@
             android:text="Google Login"
             android:id="@+id/activity_login_google"/>
 
+
     </LinearLayout>
 
 </RelativeLayout>
