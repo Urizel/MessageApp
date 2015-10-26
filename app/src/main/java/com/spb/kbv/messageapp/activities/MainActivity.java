@@ -1,13 +1,16 @@
 package com.spb.kbv.messageapp.activities;
 
 import android.os.Bundle;
+import com.spb.kbv.messageapp.R;
 
-/**
- * Created by Bogdan on 17.10.2015.
- */
 public class MainActivity extends BaseAuthenticatedActivity {
+
+
+
     @Override
     protected void onMessageAppCreate(Bundle savedInstanceState) {
+        setContentView(R.layout.activity_main);
+
 
     }
 }
