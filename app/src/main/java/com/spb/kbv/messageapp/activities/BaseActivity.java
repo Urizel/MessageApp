@@ -32,4 +32,8 @@ public class BaseActivity extends ActionBarActivity {
         this.navDrawer = navDrawer;
         this.navDrawer.create();
     }
+
+    public Toolbar getToolbar(){
+        return toolbar;
+    }
 }
