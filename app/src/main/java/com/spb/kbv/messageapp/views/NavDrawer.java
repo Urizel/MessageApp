@@ -28,7 +28,7 @@ public class NavDrawer {
     public NavDrawer(BaseActivity activity){
         this.activity = activity;
         items = new ArrayList<>();
-        drawerLayout = (DrawerLayout)activity.findViewById(R.id.drawer_layoyt);
+        drawerLayout = (DrawerLayout)activity.findViewById(R.id.drawer_layout);
         navDrawerView = (ViewGroup) activity.findViewById(R.id.nav_drawer);
 
         if (drawerLayout == null || navDrawerView == null)
@@ -107,9 +107,11 @@ public class NavDrawer {
             ViewGroup container = (ViewGroup)navDrawerView.findViewById(containerId);
             if (container == null)
                 throw new RuntimeException ("Nav drawer item " + text + " could not be attached to ViewGroup. View not found");
-            view = inflater.inflate(R.layout.list_item_new_drawer, container);
+            view = inflater.inflate(R.layout.list_item_new_drawer, container, false);
+            container.addView(view);
+            view.setOnClickListener(this);
             icon = (ImageView)view.findViewById(R.id.list_item_nav_drawer_icon);
-            textView = (TextView)view.findViewById(R.id.list_iten_nav_drawer_text);
+            textView = (TextView)view.findViewById(R.id.list_item_nav_drawer_text);
             badgeTextView = (TextView)view.findViewById(R.id.list_item_nav_drawer_badge);
 
             defaultTextColor = textView.getCurrentTextColor();
@@ -127,10 +129,10 @@ public class NavDrawer {
         public void setSelected(boolean isSelected) {
             if (isSelected){
                 view.setBackgroundResource(R.drawable.list_item_nav_drawer_selected_item_background);
-                textView.setTextColor(navDrawer.activity.getResources().getColor(R.color.list_item+nav_drawer_selected_item_text_color));
+                textView.setTextColor(navDrawer.activity.getResources().getColor(R.color.list_item_nav_drawer_selected_item_text_color));
 
             } else {
-                view.setBackgroundResource(null);
+                view.setBackground(null);
                 textView.setTextColor(defaultTextColor);
             }
 
@@ -168,7 +170,7 @@ public class NavDrawer {
             navDrawer.setSelectedItem(this);
         }
 
-           }
+    }
 
     public static class ActivityNavDrawerItem extends BasicNavDrawerItem{
         public final Class targetActivity;
@@ -190,16 +192,23 @@ public class NavDrawer {
 
         @Override
         public void onClick(View view) {
+            super.onClick(view);
             navDrawer.setOpen(false);
 
-            if(navDrawer.activity.getClass() == targetActivity)
+            final BaseActivity activity = navDrawer.activity;
+            if(activity.getClass() == targetActivity)
                 return;
 
-            super.onClick(view);
 
-            // TODO : animations
-            navDrawer.activity.startActivity(new Intent(navDrawer.activity, targetActivity));
-            navDrawer.activity.finish();
+
+            activity.fadeOut(new BaseActivity.FadeOutListener() {
+                @Override
+                public void onFadeOutEnd() {
+                    activity.startActivity(new Intent(activity, targetActivity));
+                    activity.finish();
+                }
+            });
+
         }
     }
 
