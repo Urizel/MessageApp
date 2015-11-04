@@ -1,6 +1,8 @@
 package com.spb.kbv.messageapp.services;
 
+import com.spb.kbv.messageapp.infrastructure.Auth;
 import com.spb.kbv.messageapp.infrastructure.MessageApplication;
+import com.spb.kbv.messageapp.infrastructure.User;
 import com.squareup.otto.Subscribe;
 
 public class InMemoryAccountService extends BaseInMemoryService {
@@ -11,17 +13,39 @@ public class InMemoryAccountService extends BaseInMemoryService {
     }
 
     @Subscribe
-    public void updateProfile(Account.UpdateProfileRequest request){
-        Account.UpdateProfileResponse response = new Account.UpdateProfileResponse();
+    public void updateProfile(final Account.UpdateProfileRequest request){
+        final Account.UpdateProfileResponse response = new Account.UpdateProfileResponse();
         if (request.displayName.equals("b"))
             response.setPropertyError("displayName", "ERROR");
 
-        postDelayed(response);
+        invokeDelayed(new Runnable() {
+            @Override
+            public void run() {
+                User user = application.getAuth().getUser();
+                user.setDisplayName(request.displayName);
+                user.setEmail(request.email);
+
+                bus.post(response);
+                bus.post(new Account.UserDetailsUpdateEvent(user));
+
+            }
+        }, 2000, 3000);
+
+
     }
 
     @Subscribe
-    public void updateAvatar(Account.ChangeAvatarRequest request){
-        postDelayed(new Account.ChangeAvatarResponse());
+    public void updateAvatar(final Account.ChangeAvatarRequest request){
+        invokeDelayed(new Runnable() {
+            @Override
+            public void run() {
+                User user = application.getAuth().getUser();
+                user.setAvatarUrl(request.newAvatarUri.toString());
+
+                bus.post(new Account.ChangeAvatarResponse());
+                bus.post(new Account.UserDetailsUpdateEvent(user));
+            }
+        }, 4000, 5000);
     }
 
     @Subscribe
@@ -37,6 +61,89 @@ public class InMemoryAccountService extends BaseInMemoryService {
         }
 
         postDelayed(response);
+    }
+
+    @Subscribe
+    public void loginWithUserName(Account.LoginWithUsernameRequest request){
+        invokeDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Account.LoginWithUsernameResponse response = new Account.LoginWithUsernameResponse();
+                loginUser(response);
+                bus.post(response);
+
+            }
+        }, 1000, 2000);
+    }
+
+    @Subscribe
+    public void loginWithExternalToken(Account.LoginWithExternalTokenRequest request){
+        invokeDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Account.LoginWithExternalTokenResponse response = new Account.LoginWithExternalTokenResponse();
+                loginUser(response);
+                bus.post(response);
+            }
+        }, 1000, 2000);
+    }
+
+    @Subscribe
+    public void register(Account.RegisterRequest request){
+        invokeDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Account.RegisterResponse response = new Account.RegisterResponse();
+                loginUser(response);
+                bus.post(response);
+            }
+        }, 1000, 2000);
+    }
+
+    @Subscribe
+    public void externalRegister(Account.RegisterWithExternalTokenRequest request){
+        invokeDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Account.RegisterWithExternalTokenResponse response = new Account.RegisterWithExternalTokenResponse();
+                loginUser(response);
+                bus.post(response);
+            }
+        }, 1000, 2000);
+    }
+
+    @Subscribe
+    public void loginWithLocalToken(Account.LoginWithLocalTokenRequest request){
+        invokeDelayed(new Runnable() {
+            @Override
+            public void run() {
+                Account.LoginWithLocalTokenResponse response = new Account.LoginWithLocalTokenResponse();
+                loginUser(response);
+                bus.post(response);
+            }
+        }, 1000, 2000);
+    }
+
+    private void loginUser(Account.UserResponse response) {
+        Auth auth = application.getAuth();
+        User user = auth.getUser();
+
+        user.setDisplayName("Default Display Name");
+        user.setUserName("Default User Name");
+        user.setEmail("default@mail.ru");
+        user.setAvatarUrl("http://www.gravatar.com/avatar/1?d=identicon");
+        user.setIsLoggedIn(true);
+        user.setId(123);
+        bus.post(new Account.UserDetailsUpdateEvent(user));
+
+        auth.setAuthToken("fakeAuthToken");
+
+        response.displayName = user.getDisplayName();
+        response.userName = user.getUserName();
+        response.email = user.getEmail();
+        response.avatarUrl = user.getAvatarUrl();
+        response.id = user.getId();
+        response.authToken = auth.getAuthToken();
     }
 
 }

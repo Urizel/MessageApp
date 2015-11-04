@@ -29,7 +29,7 @@ public final class Account {
         }
     }
 
-    public static class LoginWithUsernameRespones extends UserResponse {
+    public static class LoginWithUsernameResponse extends UserResponse {
     }
 
     public static class LoginWithLocalTokenRequest {
