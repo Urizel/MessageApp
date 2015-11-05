@@ -75,7 +75,8 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         avatarProgressFrame.setVisibility(View.GONE);
 
         User user = application.getAuth().getUser();
-        setTitleToActionBar();
+        getSupportActionBar().setTitle(user.getDisplayName());
+
         if (savedState == null) {
             displayNameText.setText(user.getDisplayName());
             emailText.setText(user.getEmail());
@@ -85,6 +86,10 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         if (isProgressBarVisible)
             setProgressBarVisible(true);
 
+    }
+    @Subscribe
+    public void onUserDetailsUpdated(Account.UserDetailsUpdateEvent event){
+        getSupportActionBar().setTitle(event.user.getDisplayName());
     }
 
     @Override
@@ -273,7 +278,5 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         }
     }
 
-    private void setTitleToActionBar() {
-        getSupportActionBar().setTitle(application.getAuth().getUser().getDisplayName());
-    }
+
 }

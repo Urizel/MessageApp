@@ -1,9 +1,9 @@
 package com.spb.kbv.messageapp.views;
 
 import android.content.Intent;
+import android.support.v4.view.GravityCompat;
 import android.support.v4.widget.DrawerLayout;
 import android.support.v7.widget.Toolbar;
-import android.view.Gravity;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -43,7 +43,14 @@ public class NavDrawer {
             }
         });
 
+        activity.getMessageAppApplication().getBus().register(this);
+
     }
+
+    public void destroy(){
+        activity.getMessageAppApplication().getBus().unregister(this);
+    }
+
 
     public void addItem(NavDrawerItem item){
         items.add(item);
@@ -51,14 +58,14 @@ public class NavDrawer {
     }
 
     public boolean isOpen(){
-        return drawerLayout.isDrawerOpen(Gravity.START);
+        return drawerLayout.isDrawerOpen(GravityCompat.START);
     }
 
     public void setOpen(boolean isOpen){
         if (isOpen)
-            drawerLayout.openDrawer(Gravity.START);
+            drawerLayout.openDrawer(GravityCompat.START);
         else
-            drawerLayout.closeDrawer(Gravity.START);
+            drawerLayout.closeDrawer(GravityCompat.START);
     }
 
 

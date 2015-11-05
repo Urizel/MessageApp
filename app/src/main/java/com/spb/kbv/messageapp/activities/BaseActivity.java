@@ -34,6 +34,8 @@ public class BaseActivity extends ActionBarActivity {
     protected void onDestroy() {
         super.onDestroy();
         bus.unregister(this);
+        if (navDrawer != null)
+            navDrawer.destroy();
     }
 
     @Override

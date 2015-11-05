@@ -1,13 +1,14 @@
 package com.spb.kbv.messageapp.fragments;
 
 import android.app.Activity;
-import android.content.Context;
 import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
 
 import com.spb.kbv.messageapp.R;
+import com.spb.kbv.messageapp.services.Account;
+import com.squareup.otto.Subscribe;
 
 public class LoginFragment extends BaseFragment implements View.OnClickListener {
 
@@ -25,9 +26,36 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     @Override
     public void onClick(View view) {
         if (view == loginButton){
-            application.getAuth().getUser().setIsLoggedIn(true);
-            callbacks.onLoggedIn();
+            progressBar.setVisibility(View.VISIBLE);
+            loginButton.setText("");
+            usernameText.setEnabled(false);
+            passwordText.setEnabled(false);
+
+
+            bus.post(new Account.LoginWithUsernameRequest(
+                    usernameText.getText().toString(),
+                    passwordText.getText().toString()));
         }
+    }
+
+    @Subscribe
+    public void onLoginWithUserName (Account.LoginWithUsernameResponse respones){
+        respones.showErrorToast(getActivity());
+
+        if (respones.didSucceed()){
+            callbacks.onLoggedIn();
+            return;
+        }
+
+        usernameText.setError(respones.getPropertyErrror("userName"));
+        usernameText.setEnabled(true);
+
+        passwordText.setError(respones.getPropertyErrror("password"));
+        passwordText.setEnabled(true);
+
+        progressBar.setVisibiliti(View.GONE);
+        loginButton.setText(defaultLoginButtonText);
+
     }
 
     @Override

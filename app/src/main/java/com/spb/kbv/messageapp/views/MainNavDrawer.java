@@ -12,6 +12,8 @@ import com.spb.kbv.messageapp.activities.MainActivity;
 import com.spb.kbv.messageapp.activities.ProfileActivity;
 import com.spb.kbv.messageapp.activities.SentMessagesActivity;
 import com.spb.kbv.messageapp.infrastructure.User;
+import com.spb.kbv.messageapp.services.Account;
+import com.squareup.otto.Subscribe;
 
 public class MainNavDrawer extends NavDrawer {
     private final TextView displayNameText;
@@ -62,6 +64,10 @@ public class MainNavDrawer extends NavDrawer {
 
         User loggedInUser = activity.getMessageAppApplication().getAuth().getUser();
         displayNameText.setText(loggedInUser.getUserName());
+    }
 
+    @Subscribe
+    public void onUserDetailUpdate(Account.UserDetailsUpdateEvent event){
+        displayNameText.setText(event.user.getDisplayName());
     }
 }
