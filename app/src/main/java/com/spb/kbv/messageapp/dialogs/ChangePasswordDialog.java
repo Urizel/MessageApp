@@ -4,6 +4,7 @@ import android.app.AlertDialog;
 import android.app.Dialog;
 import android.app.ProgressDialog;
 import android.os.Bundle;
+import android.util.Log;
 import android.view.View;
 import android.widget.EditText;
 import android.widget.Toast;
@@ -57,6 +58,7 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
 
     @Subscribe
     public void passwordChanged(Account.ChangePasswordResponse response){
+        Log.d("Password Dialog---", "passwordChanged");
         progressDialog.dismiss();
         progressDialog = null;
 

@@ -15,6 +15,7 @@ public class BaseDialogFragment extends DialogFragment{
         super.onCreate(savedInstanceState);
         application = (MessageApplication)getActivity().getApplication();
         bus = application.getBus();
+        bus.register(this);
     }
 
     @Override

@@ -10,6 +10,7 @@ public class InMemoryAccountService extends BaseInMemoryService {
 
     public InMemoryAccountService (MessageApplication application){
         super(application);
+        this.application = application;
     }
 
     @Subscribe
@@ -64,13 +65,17 @@ public class InMemoryAccountService extends BaseInMemoryService {
     }
 
     @Subscribe
-    public void loginWithUserName(Account.LoginWithUsernameRequest request){
+    public void loginWithUserName(final Account.LoginWithUsernameRequest request){
         invokeDelayed(new Runnable() {
             @Override
             public void run() {
                 Account.LoginWithUsernameResponse response = new Account.LoginWithUsernameResponse();
+                if (request.userName.equals("b"))
+                    response.setPropertyError("userName", "Invalid username or password");
+
                 loginUser(response);
                 bus.post(response);
+
 
             }
         }, 1000, 2000);

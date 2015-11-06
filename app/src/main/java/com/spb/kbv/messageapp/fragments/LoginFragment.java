@@ -5,6 +5,8 @@ import android.os.Bundle;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
+import android.widget.Button;
+import android.widget.EditText;
 
 import com.spb.kbv.messageapp.R;
 import com.spb.kbv.messageapp.services.Account;
@@ -12,14 +14,24 @@ import com.squareup.otto.Subscribe;
 
 public class LoginFragment extends BaseFragment implements View.OnClickListener {
 
-    private View loginButton;
+    private Button loginButton;
     private Callbacks callbacks;
+    private View progressBar;
+    private EditText usernameText;
+    private EditText passwordText;
+    private String defaultLoginButtonText;
+
 
     @Override
     public View onCreateView(LayoutInflater inflater, ViewGroup container, Bundle savedInstanceState) {
         View view = inflater.inflate(R.layout.fragment_login, container, false);
-        loginButton = view.findViewById(R.id.frafment_login_loginButton);
+        loginButton = (Button)view.findViewById(R.id.fragment_login_loginButton);
         loginButton.setOnClickListener(this);
+
+        progressBar = view.findViewById(R.id.fragment_login_progress);
+        usernameText = (EditText)view.findViewById(R.id.fragment_login_username);
+        passwordText = (EditText)view.findViewById(R.id.fragment_login_password);
+        defaultLoginButtonText = loginButton.getText().toString();
         return view;
     }
 
@@ -28,6 +40,7 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         if (view == loginButton){
             progressBar.setVisibility(View.VISIBLE);
             loginButton.setText("");
+            loginButton.setEnabled(false);
             usernameText.setEnabled(false);
             passwordText.setEnabled(false);
 
@@ -53,7 +66,9 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
         passwordText.setError(respones.getPropertyErrror("password"));
         passwordText.setEnabled(true);
 
-        progressBar.setVisibiliti(View.GONE);
+        loginButton.setEnabled(true);
+
+        progressBar.setVisibility(View.GONE);
         loginButton.setText(defaultLoginButtonText);
 
     }

@@ -3,7 +3,6 @@ package com.spb.kbv.messageapp.views;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
-import android.widget.Toast;
 
 import com.spb.kbv.messageapp.R;
 import com.spb.kbv.messageapp.activities.BaseActivity;
@@ -55,7 +54,7 @@ public class MainNavDrawer extends NavDrawer {
                 R.id.include_main_nav_drawer_bottomItems) {
             @Override
             public void onClick(View v) {
-                Toast.makeText(activity, "You have logged out", Toast.LENGTH_SHORT).show();
+                activity.getMessageAppApplication().getAuth().logout();
             }
         });
 

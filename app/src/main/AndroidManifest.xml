@@ -32,7 +32,9 @@
 
         <activity android:name=".activities.SentMessagesActivity"/>
 
-        <activity android:name="com.soundcloud.android.crop.CropImageActivity" />
+        <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
+
+        <activity android:name=".activities.AuthenticationActivity"/>
 
     </application>
 
