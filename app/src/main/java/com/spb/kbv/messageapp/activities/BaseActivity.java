@@ -8,6 +8,7 @@ import android.util.DisplayMetrics;
 import android.view.View;
 
 import com.spb.kbv.messageapp.R;
+import com.spb.kbv.messageapp.infrastructure.ActionScheduler;
 import com.spb.kbv.messageapp.infrastructure.MessageApplication;
 import com.spb.kbv.messageapp.views.NavDrawer;
 import com.squareup.otto.Bus;
@@ -18,6 +19,7 @@ public class BaseActivity extends ActionBarActivity {
     protected NavDrawer navDrawer;
     protected boolean isTablet;
     protected Bus bus;
+    protected ActionScheduler scheduler;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,9 +27,26 @@ public class BaseActivity extends ActionBarActivity {
 
         application = (MessageApplication)getApplication();
         bus = application.getBus();
+        scheduler = new ActionScheduler(application);
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         isTablet = (metrics.widthPixels / metrics.density) >= 600;
         bus.register(this);
+    }
+
+    public ActionScheduler getScheduler() {
+        return scheduler;
+    }
+
+    @Override
+    protected void onResume() {
+        super.onResume();
+        scheduler.onResume();
+    }
+
+    @Override
+    protected void onPause() {
+        super.onPause();
+        scheduler.onPause();
     }
 
     @Override
