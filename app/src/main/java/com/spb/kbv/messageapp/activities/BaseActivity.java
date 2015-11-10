@@ -14,6 +14,8 @@ import com.spb.kbv.messageapp.views.NavDrawer;
 import com.squareup.otto.Bus;
 
 public class BaseActivity extends ActionBarActivity {
+    private boolean isRegisteredWithBus;
+
     protected MessageApplication application;
     protected Toolbar toolbar;
     protected NavDrawer navDrawer;
@@ -52,9 +54,23 @@ public class BaseActivity extends ActionBarActivity {
     @Override
     protected void onDestroy() {
         super.onDestroy();
-        bus.unregister(this);
+        if (isRegisteredWithBus){
+            bus.unregister(this);
+            isRegisteredWithBus = false;
+        }
+
         if (navDrawer != null)
             navDrawer.destroy();
+    }
+
+    @Override
+    public void finish() {
+        super.finish();
+
+        if (isRegisteredWithBus){
+            bus.unregister(this);
+            isRegisteredWithBus = false;
+        }
     }
 
     @Override

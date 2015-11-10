@@ -4,6 +4,9 @@
     android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:id="@+id/fragment_pending_contact_request_list">
+    android:id="@+id/fragment_pending_contact_request_list"
+    android:background="#EEDDDD">
+
+
 
 </ListView>

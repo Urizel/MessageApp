@@ -6,7 +6,7 @@ import android.widget.TextView;
 
 import com.spb.kbv.messageapp.R;
 import com.spb.kbv.messageapp.activities.BaseActivity;
-import com.spb.kbv.messageapp.activities.ContactActivity;
+import com.spb.kbv.messageapp.activities.ContactsActivity;
 import com.spb.kbv.messageapp.activities.MainActivity;
 import com.spb.kbv.messageapp.activities.ProfileActivity;
 import com.spb.kbv.messageapp.activities.SentMessagesActivity;
@@ -34,7 +34,7 @@ public class MainNavDrawer extends NavDrawer {
                 R.drawable.ic_action_send_now,
                 R.id.include_main_nav_drawer_topItems));
 
-        addItem(new ActivityNavDrawerItem(ContactActivity.class,
+        addItem(new ActivityNavDrawerItem(ContactsActivity.class,
                 "Contacts",
                 null,
                 R.drawable.ic_action_group,

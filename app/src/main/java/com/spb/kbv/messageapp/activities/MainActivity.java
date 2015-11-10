@@ -7,8 +7,6 @@ import com.spb.kbv.messageapp.views.MainNavDrawer;
 
 public class MainActivity extends BaseAuthenticatedActivity {
 
-
-
     @Override
     protected void onMessageAppCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_main);
