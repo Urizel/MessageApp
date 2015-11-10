@@ -43,8 +43,10 @@ public class InMemoryAccountService extends BaseInMemoryService {
                 User user = application.getAuth().getUser();
                 user.setAvatarUrl(request.newAvatarUri.toString());
 
+
                 bus.post(new Account.ChangeAvatarResponse());
-                bus.post(new Account.UserDetailsUpdateEvent(user));
+                /*bus.post(new Account.UserDetailsUpdateEvent(user));*/
+                bus.post(new Account.AvatarUpdateEvent(request.newAvatarUri));
             }
         }, 4000, 5000);
     }

@@ -145,6 +145,10 @@ public final class Account {
         }
     }
 
-
-
+    public static class AvatarUpdateEvent {
+        public Uri uri;
+        public AvatarUpdateEvent(Uri newAvatarUri) {
+            uri = newAvatarUri;
+        }
+    }
 }

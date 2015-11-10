@@ -87,11 +87,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             setProgressBarVisible(true);
 
     }
-    @Subscribe
-    public void onUserDetailsUpdated(Account.UserDetailsUpdateEvent event){
-        getSupportActionBar().setTitle(event.user.getDisplayName());
-    }
-
     @Override
     protected void onSaveInstanceState(Bundle savedState) {
         super.onSaveInstanceState(savedState);
@@ -177,6 +172,18 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         displayNameText.setError(response.getPropertyErrror("displayName"));
         emailText.setError(response.getPropertyErrror("email"));
         setProgressBarVisible(false);
+    }
+
+    @Subscribe
+    public void onAvatarUpdateFromEventForExample(Account.AvatarUpdateEvent event){
+        avatarView.setImageURI(null);
+        avatarView.setImageURI(event.uri);
+    }
+
+    @Subscribe
+    public void onUserDetailsUpdated(Account.UserDetailsUpdateEvent event){
+        getSupportActionBar().setTitle(event.user.getDisplayName());
+
     }
 
     private void setProgressBarVisible(boolean visible){
