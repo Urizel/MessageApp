@@ -61,6 +61,6 @@ public class InMemoryContactService extends BaseInMemoryService{
                 isContact,
                 "Contact " + idString,
                 "Contact" + idString,
-                "http://gravatar.com/avatar/" + idString + "?d=identicon$s=64");
+                "http://gravatar.com/avatar/" + idString + "?d=identicons=64");
     }
 }
