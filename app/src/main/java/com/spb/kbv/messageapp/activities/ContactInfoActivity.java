@@ -5,7 +5,7 @@ import android.os.Bundle;
 import com.spb.kbv.messageapp.R;
 
 public class ContactInfoActivity extends BaseAuthenticatedActivity{
-    private static final String EXTRA_USER_DETAILS = "EXTRA_USER_DETAILS";
+    public static final String EXTRA_USER_DETAILS = "EXTRA_USER_DETAILS";
 
     @Override
     protected void onMessageAppCreate(Bundle savedInstanceState) {

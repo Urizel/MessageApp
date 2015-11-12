@@ -1,6 +1,9 @@
 package com.spb.kbv.messageapp.services.entities;
 
-public class UserDetails {
+import android.os.Parcel;
+import android.os.Parcelable;
+
+public class UserDetails implements Parcelable{
     private int id;
     private boolean isContact;
     private String displayName;
@@ -34,4 +37,26 @@ public class UserDetails {
     public String getAvatarUrl() {
         return avatarUrl;
     }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel parcel, int i) {
+
+    }
+
+    public static final Creator<UserDetails> CREATOR = new Creator<UserDetails>() {
+        @Override
+        public UserDetails createFromParcel(Parcel parcel) {
+            return new UserDetails(0, false, null, null, null);
+        }
+
+        @Override
+        public UserDetails[] newArray(int i) {
+            return new UserDetails[0];
+        }
+    };
 }
