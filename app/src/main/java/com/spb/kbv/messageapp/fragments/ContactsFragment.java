@@ -51,7 +51,7 @@ public class ContactsFragment extends BaseFragment implements AdapterView.OnItem
     }
 
     @Subscribe
-    public void onContactREsponse(final Contacts.GetContactResponse response){
+    public void onContactResponse(final Contacts.GetContactResponse response){
         scheduler.invokeOnResume(Contacts.GetContactResponse.class, new Runnable() {
             @Override
             public void run() {
