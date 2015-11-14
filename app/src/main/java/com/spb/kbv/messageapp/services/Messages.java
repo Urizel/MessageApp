@@ -9,7 +9,7 @@ public final class Messages {
     private Messages(){
     }
 
-    public class DeleteMessageRequest {
+    public static class DeleteMessageRequest {
         public int messageId;
 
         public DeleteMessageRequest(int messageId) {
@@ -17,15 +17,16 @@ public final class Messages {
         }
     }
 
-    public class DeleteMessageResponse extends ServiceResponse{
+    public static class DeleteMessageResponse extends ServiceResponse{
+        public int messageId;
     }
 
-    public class SearchMessagesRequest {
-        public String fromContactId;
+    public static class SearchMessagesRequest {
+        public int fromContactId;
         public boolean includeSentMessages;
         public boolean includeReceivedMessages;
 
-        public SearchMessagesRequest(String fromContactId, boolean includeSentMessages, boolean includeReceivedMessages) {
+        public SearchMessagesRequest(int fromContactId, boolean includeSentMessages, boolean includeReceivedMessages) {
             this.fromContactId = fromContactId;
             this.includeSentMessages = includeSentMessages;
             this.includeReceivedMessages = includeReceivedMessages;
@@ -37,7 +38,7 @@ public final class Messages {
         }
     }
 
-    public class SearchMessageResponse extends ServiceResponse {
+    public static class SearchMessageResponse extends ServiceResponse {
         public List<Message> messages;
     }
 

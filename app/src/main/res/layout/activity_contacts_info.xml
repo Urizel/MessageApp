@@ -1,14 +1,32 @@
 <?xml version="1.0" encoding="utf-8"?>
-<LinearLayout
+<RelativeLayout
     xmlns:android="http://schemas.android.com/apk/res/android"
-    android:orientation="vertical"
     android:layout_width="match_parent"
     android:layout_height="match_parent">
-
-    <TextView
+    <include
+        layout="@layout/include_toolbar"
+        android:id="@+id/inlude_toolbar"/>
+    <android.support.v7.widget.RecyclerView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:gravity="center"
-        android:text="Contact Info"/>
+        android:scrollbars="vertical"
+        android:layout_below="@id/include_toolbar"
+        android:id="@+id/activity_contacts_info_messages"/>
+    <FrameLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:id="@+id/activity_contacts_info_progressFrame"
+        android:clickable="true"
+        android:background="#dd000000">
+        <ProgressBar
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:indeterminateOnly="true"
+            android:layout_gravity="center"/>
 
-</LinearLayout>
+
+    </FrameLayout>
+
+
+
+</RelativeLayout>

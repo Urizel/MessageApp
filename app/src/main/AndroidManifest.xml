@@ -39,6 +39,10 @@
 
         <activity android:name=".activities.AddContactActivity"/>
 
+        <activity android:name=".activities.MessageActivity"/>
+
+        <activity android:name=".activities.NewMessageActivity"/>
+
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
     </application>

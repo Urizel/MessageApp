@@ -8,6 +8,7 @@ import com.squareup.otto.Subscribe;
 import java.util.ArrayList;
 import java.util.GregorianCalendar;
 
+
 public class InMemoryContactService extends BaseInMemoryService{
 
 
@@ -41,7 +42,7 @@ public class InMemoryContactService extends BaseInMemoryService{
 
     @Subscribe
     public void sendContactsRequest(Contacts.SendContactRequestRequest request){
-        if (request.userId ==2){
+        if (request.userId == 2){
             Contacts.SendContactRequestResponse response = new Contacts.SendContactRequestResponse();
             response.setOperationError("Some error");
             postDelayed(response);
@@ -52,6 +53,14 @@ public class InMemoryContactService extends BaseInMemoryService{
     @Subscribe
     public void respondToContactsRequest(Contacts.RespondToContactRequestRequest reauest){
         postDelayed(new Contacts.RespondToContactRequestResponse());
+    }
+
+    @Subscribe
+    public void removeContact(Contacts.RemoveContactRequest request){
+        Contacts.RemoveContactResponse response = new Contacts.RemoveContactResponse();
+        response.removedContactId = request.contactId;
+        postDelayed(response);
+
     }
 
     private UserDetails createFakeUser(int id, boolean isContact) {
