@@ -1,5 +1,7 @@
 package com.spb.kbv.messageapp.services;
 
+import android.util.Log;
+
 import com.spb.kbv.messageapp.infrastructure.MessageApplication;
 import com.spb.kbv.messageapp.services.entities.ContactRequest;
 import com.spb.kbv.messageapp.services.entities.UserDetails;
@@ -60,6 +62,19 @@ public class InMemoryContactService extends BaseInMemoryService{
         Contacts.RemoveContactResponse response = new Contacts.RemoveContactResponse();
         response.removedContactId = request.contactId;
         postDelayed(response);
+    }
+
+    @Subscribe
+    public void searchUsers(Contacts.SearchUserRequest request){
+        Contacts.SearchUserResponse response = new Contacts.SearchUserResponse();
+        response.query = request.query;
+        response.users = new ArrayList<>();
+        for (int i = 0; i < request.query.length(); i++){
+            response.users.add(createFakeUser(i, false));
+        }
+
+
+        postDelayed(response, 2000, 3000);
 
     }
 

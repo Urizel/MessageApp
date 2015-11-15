@@ -69,4 +69,17 @@ public final class Contacts {
         public int removedContactId;
 
     }
+
+    public static class SearchUserRequest {
+        public String query;
+
+        public SearchUserRequest(String query) {
+            this.query = query;
+        }
+    }
+
+    public static class SearchUserResponse extends ServiceResponse {
+        public List<UserDetails> users;
+        public String query;
+    }
 }

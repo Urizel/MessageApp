@@ -33,6 +33,7 @@ public class BaseActivity extends ActionBarActivity {
         DisplayMetrics metrics = getResources().getDisplayMetrics();
         isTablet = (metrics.widthPixels / metrics.density) >= 600;
         bus.register(this);
+        isRegisteredWithBus = true;
     }
 
     public ActionScheduler getScheduler() {

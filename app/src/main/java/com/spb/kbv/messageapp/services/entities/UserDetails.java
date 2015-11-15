@@ -4,11 +4,11 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class UserDetails implements Parcelable{
-    private int id;
-    private boolean isContact;
-    private String displayName;
-    private String username;
-    private String avatarUrl;
+    private final int id;
+    private final boolean isContact;
+    private final String displayName;
+    private final String username;
+    private final String avatarUrl;
 
     public UserDetails(int id, boolean isContact, String displayName, String username, String avatarUrl) {
         this.id = id;
@@ -16,6 +16,29 @@ public class UserDetails implements Parcelable{
         this.displayName = displayName;
         this.username = username;
         this.avatarUrl = avatarUrl;
+    }
+
+    private UserDetails(Parcel parcel){
+        id = parcel.readInt();
+        isContact = parcel.readByte() == 1;
+        displayName = parcel.readString();
+        username = parcel.readString();
+        avatarUrl = parcel.readString();
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
+    }
+
+    @Override
+    public void writeToParcel(Parcel destination, int i) {
+        destination.writeInt(id);
+        destination.writeByte((byte) (isContact ? 1 : 0));
+        destination.writeString(displayName);
+        destination.writeString(username);
+        destination.writeString(avatarUrl);
+
     }
 
     public int getId() {
@@ -38,25 +61,15 @@ public class UserDetails implements Parcelable{
         return avatarUrl;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel parcel, int i) {
-
-    }
-
     public static final Creator<UserDetails> CREATOR = new Creator<UserDetails>() {
         @Override
         public UserDetails createFromParcel(Parcel parcel) {
-            return new UserDetails(0, false, null, null, null);
+            return new UserDetails(parcel);
         }
 
         @Override
-        public UserDetails[] newArray(int i) {
-            return new UserDetails[0];
+        public UserDetails[] newArray(int size) {
+            return new UserDetails[size];
         }
     };
 }

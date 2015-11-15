@@ -3,7 +3,10 @@ package com.spb.kbv.messageapp.services.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
+import com.spb.kbv.messageapp.infrastructure.User;
+
 import java.util.Calendar;
+import java.util.GregorianCalendar;
 
 public class Message implements Parcelable{
     private int id;
@@ -13,12 +16,12 @@ public class Message implements Parcelable{
     private String messageUrl;
     private UserDetails otherUser;
     private boolean isFromUs;
-    private boolean isRead;
     private boolean isSelected;
+    private boolean isRead;
 
     public Message(
             int id,
-            Calendar calendar,
+            Calendar createdAt,
             String shortMessage,
             String longMessage,
             String messageUrl,
@@ -26,13 +29,43 @@ public class Message implements Parcelable{
             boolean ifFromUs,
             boolean isRead) {
         this.id = id;
-        this.createdAt = calendar;
+        this.createdAt = createdAt;
         this.shortMessage = shortMessage;
         this.longMessage = longMessage;
         this.messageUrl = messageUrl;
         this.otherUser = otherUser;
         this.isFromUs = ifFromUs;
         this.isRead = isRead;
+    }
+
+    private Message (Parcel parcel){
+        id = parcel.readInt();
+        createdAt = new GregorianCalendar();
+        createdAt.setTimeInMillis(parcel.readLong());
+        shortMessage = parcel.readString();
+        longMessage = parcel.readString();
+        messageUrl = parcel.readString();
+        otherUser = (UserDetails) parcel.readParcelable(UserDetails.class.getClassLoader());
+        isFromUs = parcel.readByte() == 1;
+        isRead = parcel.readByte() == 1;
+    }
+
+    @Override
+    public void writeToParcel(Parcel destination, int flags) {
+        destination.writeInt(id);
+        destination.writeLong(createdAt.getTimeInMillis());
+        destination.writeString(shortMessage);
+        destination.writeString(longMessage);
+        destination.writeString(messageUrl);
+        destination.writeParcelable(otherUser, 0);
+        destination.writeByte((byte) (isFromUs ? 1 : 0));
+        destination.writeByte((byte)(isRead ? 1 : 0));
+
+    }
+
+    @Override
+    public int describeContents() {
+        return 0;
     }
 
     public int getId() {
@@ -75,25 +108,15 @@ public class Message implements Parcelable{
         this.isSelected = isSelected;
     }
 
-    @Override
-    public int describeContents() {
-        return 0;
-    }
-
-    @Override
-    public void writeToParcel(Parcel dest, int flags) {
-
-    }
-
     private static final Creator<Message> CREATOR = new Creator<Message>() {
         @Override
         public Message createFromParcel(Parcel source) {
-            return null;
+            return new Message(source);
         }
 
         @Override
         public Message[] newArray(int size) {
-            return new Message[0];
+            return new Message[size];
         }
     };
 }
