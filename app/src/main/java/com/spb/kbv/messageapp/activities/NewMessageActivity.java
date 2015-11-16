@@ -76,6 +76,7 @@ public class NewMessageActivity extends BaseAuthenticatedActivity{
 
         cameraInfo = new Camera.CameraInfo();
         Camera.getCameraInfo(currentCameraIndex, cameraInfo);
+        cameraPreview.setCamera(camera, cameraInfo);
 
         if (cameraInfo.facing == Camera.CameraInfo.CAMERA_FACING_BACK){
             Toast.makeText(this, "Using back camera", Toast.LENGTH_SHORT).show();
