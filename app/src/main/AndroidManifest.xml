@@ -47,6 +47,8 @@
 
         <activity android:name=".activities.SelectContactActivity"/>
 
+        <activity android:name=".activities.SendMessageActivity"/>
+
         <activity android:name="com.soundcloud.android.crop.CropImageActivity"/>
 
     </application>
