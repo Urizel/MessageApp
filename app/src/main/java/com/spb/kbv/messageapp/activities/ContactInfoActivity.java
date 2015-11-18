@@ -25,6 +25,8 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
     public static final String EXTRA_USER_DETAILS = "EXTRA_USER_DETAILS";
     public static final int RESULT_USER_REMOVED = 101;
 
+    private static final int REQUEST_SEND_MESSAGE = 1;
+
     private UserDetails userDetails;
     private MessagesAdapter adapter;
     private ArrayList<Message> messages;
@@ -125,7 +127,7 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
         if (itemId == R.id.activity_contact_info_menuNewMessage) {
             Intent intent = new Intent(this, NewMessageActivity.class);
             intent.putExtra(NewMessageActivity.EXTRA_CONTACT, userDetails);
-            startActivity(intent);
+            startActivityForResult(intent, REQUEST_SEND_MESSAGE);
             return true;
         }
 
@@ -145,5 +147,13 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
         }
 
         return false;
+    }
+
+    @Override
+    protected void onActivityResult(int requestCode, int resultCode, Intent data) {
+        if (requestCode == REQUEST_SEND_MESSAGE && resultCode == RESULT_OK) {
+            progressFrame.setVisibility(View.VISIBLE);
+            bus.post(new Messages.SearchMessagesRequest(userDetails.getId(), true, true));
+        }
     }
 }

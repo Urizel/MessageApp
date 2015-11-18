@@ -1,7 +1,12 @@
 package com.spb.kbv.messageapp.services;
 
+import android.net.Uri;
+import android.os.Parcel;
+import android.os.Parcelable;
+
 import com.spb.kbv.messageapp.infrastructure.ServiceResponse;
 import com.spb.kbv.messageapp.services.entities.Message;
+import com.spb.kbv.messageapp.services.entities.UserDetails;
 
 import java.util.List;
 
@@ -42,7 +47,68 @@ public final class Messages {
         public List<Message> messages;
     }
 
+    public static class SendMessageRequest implements Parcelable {
+        private UserDetails recipient;
+        private Uri imagePath;
+        private String message;
+
+        public SendMessageRequest (){}
+
+        private SendMessageRequest (Parcel in ) {
+            recipient = in.readParcelable(UserDetails.class.getClassLoader());
+            imagePath = in.readParcelable(Uri.class.getClassLoader());
+            message = in.readString();
+        }
+        @Override
+        public int describeContents() {
+            return 0;
+        }
+
+        @Override
+        public void writeToParcel(Parcel out, int i) {
+            out.writeParcelable(recipient, 0);
+            out.writeParcelable(recipient, 0);
+            out.writeString(message);
+
+        }
 
 
+        public void setRecipient(UserDetails recipient) {
+            this.recipient = recipient;
+        }
 
+        public void setImagePath(Uri imagePath) {
+            this.imagePath = imagePath;
+        }
+
+        public void setMessage(String message) {
+            this.message = message;
+        }
+
+        public UserDetails getRecipient() {
+            return recipient;
+        }
+
+        public Uri getImagePath() {
+            return imagePath;
+        }
+
+        public String getMessage() {
+            return message;
+        }
+
+        public static Creator<SendMessageRequest> CREATOR = new Creator<SendMessageRequest>() {
+            @Override
+            public SendMessageRequest createFromParcel(Parcel parcel) {
+                return new SendMessageRequest(parcel);
+            }
+
+            @Override
+            public SendMessageRequest[] newArray(int size) {
+                return new SendMessageRequest[size];
+            }
+        };
+    }
+
+    public static class SendMessageResponse extends ServiceResponse{}
 }

@@ -51,7 +51,7 @@ public class NewMessageActivity extends BaseAuthenticatedActivity implements Vie
         frameLayout.addView(cameraPreview, 0);
 
         findViewById(R.id.activity_new_message_takePicture).setOnClickListener(this);
-        findViewById(R.id.activity_new_message_takePicture).setOnClickListener(this);
+        findViewById(R.id.activity_new_message_switchCamera).setOnClickListener(this);
     }
 
     @Override
@@ -120,6 +120,7 @@ public class NewMessageActivity extends BaseAuthenticatedActivity implements Vie
 
     private void switchCamera() {
         currentCameraIndex = currentCameraIndex + 1 < Camera.getNumberOfCameras() ? currentCameraIndex + 1 : 0;
+        Toast.makeText(this, "CURRENT CAMERA IS " + currentCameraIndex, Toast.LENGTH_SHORT).show();
         establishCamera();
     }
 
