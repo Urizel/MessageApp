@@ -30,21 +30,28 @@ public class PendingContactRequestFragment extends BaseFragment {
     }
 
     @Subscribe
-    public void onGetContactRequest(Contacts.GetContactRequestResponse response){
-        response.showErrorToast(getActivity());
+    public void onGetContactRequest(final Contacts.GetContactRequestResponse response){
+        scheduler.invokeOnResume(Contacts.GetContactRequestResponse.class, new Runnable() {
+            @Override
+            public void run() {
+                progressFrame.animate()
+                        .alpha(0)
+                        .setDuration(250)
+                        .withEndAction(new Runnable() {
+                            @Override
+                            public void run() {
+                                progressFrame.setVisibility(View.GONE);
+                            }
+                        })
+                        .start();
+                if (!response.didSucceed()){
+                    response.showErrorToast(getActivity());
+                    return;
+                }
+                adapter.clear();
+                adapter.addAll(response.requests);
+            }
+        });
 
-        progressFrame.animate()
-                .alpha(0)
-                .setDuration(250)
-                .withEndAction(new Runnable() {
-                    @Override
-                    public void run() {
-                        progressFrame.setVisibility(View.GONE);
-                    }
-                })
-                .start();
-
-        adapter.clear();
-        adapter.addAll(response.requests);
     }
 }

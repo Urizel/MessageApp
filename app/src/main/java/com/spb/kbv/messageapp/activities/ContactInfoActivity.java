@@ -79,6 +79,7 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
         scheduler.invokeOnResume(Messages.SearchMessageResponse.class, new Runnable() {
             @Override
             public void run() {
+                progressFrame.setVisibility(View.GONE);
                 if (!respones.didSucceed()) {
                     respones.showErrorToast(ContactInfoActivity.this);
                     return;
@@ -92,7 +93,7 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
                 adapter.notifyItemRangeInserted(0, messages.size());
             }
         });
-        progressFrame.setVisibility(View.GONE);
+
     }
     private void doRemoveContact(){
         progressFrame.setVisibility(View.VISIBLE);

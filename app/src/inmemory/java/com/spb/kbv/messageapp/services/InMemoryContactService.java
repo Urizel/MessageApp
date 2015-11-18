@@ -24,7 +24,7 @@ public class InMemoryContactService extends BaseInMemoryService{
         response.requests = new ArrayList<>();
 
         for (int i = 0; i < 3; i++) {
-            response.requests.add(new ContactRequest(i, request.fromUs, createFakeUser(i, false), new GregorianCalendar()));
+            response.requests.add(new ContactRequest(request.fromUs, createFakeUser(i, false), new GregorianCalendar()));
         }
 
         postDelayed(response);

@@ -14,6 +14,7 @@ import android.widget.FrameLayout;
 import android.widget.Toast;
 
 import com.spb.kbv.messageapp.R;
+import com.spb.kbv.messageapp.services.entities.Message;
 import com.spb.kbv.messageapp.services.entities.UserDetails;
 import com.spb.kbv.messageapp.views.CameraPreview;
 
@@ -129,7 +130,7 @@ public class NewMessageActivity extends BaseAuthenticatedActivity implements Vie
         Bitmap bitmap = processBitmap(data);
 
         ByteArrayOutputStream output = new ByteArrayOutputStream();
-        bitmap.compress(Bitmap.CompressFormat.JPEG, 100, output);
+        bitmap.compress(Bitmap.CompressFormat.JPEG, 70, output);
 
         File outputFile = new File(getCacheDir(), "temp-image");
         outputFile.delete();
@@ -197,6 +198,12 @@ public class NewMessageActivity extends BaseAuthenticatedActivity implements Vie
         if (requestCode == REQUEST_SEND_MESSAGE && resultCode == RESULT_OK){
             setResult(RESULT_OK);
             finish();
+
+            Message message = data.getParcelableExtra(SendMessageActivity.RESULT_MESSAGE);
+
+            Intent intent = new Intent(this, MessageActivity.class);
+            intent.putExtra(MessageActivity.EXTRA_MESSAGE, message);
+            startActivity(intent);
         }
     }
 }

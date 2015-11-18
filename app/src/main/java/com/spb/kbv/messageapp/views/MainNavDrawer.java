@@ -13,6 +13,7 @@ import com.spb.kbv.messageapp.activities.SentMessagesActivity;
 import com.spb.kbv.messageapp.infrastructure.User;
 import com.spb.kbv.messageapp.services.Account;
 import com.squareup.otto.Subscribe;
+import com.squareup.picasso.Picasso;
 
 public class MainNavDrawer extends NavDrawer {
     private final TextView displayNameText;
@@ -63,10 +64,13 @@ public class MainNavDrawer extends NavDrawer {
 
         User loggedInUser = activity.getMessageAppApplication().getAuth().getUser();
         displayNameText.setText(loggedInUser.getUserName());
+        Picasso.with(activity).load(loggedInUser.getAvatarUrl()).into(avatarImage);
     }
 
     @Subscribe
     public void onUserDetailUpdate(Account.UserDetailsUpdateEvent event){
+        Picasso.with(activity).load(event.user.getAvatarUrl()).into(avatarImage);
         displayNameText.setText(event.user.getDisplayName());
+
     }
 }
