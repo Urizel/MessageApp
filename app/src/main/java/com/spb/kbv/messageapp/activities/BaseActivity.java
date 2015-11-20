@@ -88,13 +88,15 @@ public class BaseActivity extends ActionBarActivity implements SwipeRefreshLayou
         swipeRefresh = (SwipeRefreshLayout) findViewById(R.id.activity_main_swipe_refresh);
         if (swipeRefresh != null){
             swipeRefresh.setOnRefreshListener(this);
+
+            swipeRefresh.setColorSchemeColors(
+                    Color.parseColor("#FF00DDFF"),
+                    Color.parseColor("#FF99CC00"),
+                    Color.parseColor("#FFFFBB33"),
+                    Color.parseColor("#FFFF4444")
+            );
         }
-        swipeRefresh.setColorSchemeColors(
-                Color.parseColor("#FF00DDFF"),
-                Color.parseColor("#FF99CC00"),
-                Color.parseColor("#FFFFBB33"),
-                Color.parseColor("#FFFF4444")
-        );
+
     }
 
     public void fadeOut(final FadeOutListener listener){

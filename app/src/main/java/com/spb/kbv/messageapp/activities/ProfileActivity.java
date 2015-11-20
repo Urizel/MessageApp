@@ -171,8 +171,8 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
             response.showErrorToast(this);
             changeState(STATE_EDITING);
         }
-        displayNameText.setError(response.getPropertyErrror("displayName"));
-        emailText.setError(response.getPropertyErrror("email"));
+        displayNameText.setError(response.getPropertyError("displayName"));
+        emailText.setError(response.getPropertyError("email"));
         setProgressBarVisible(false);
     }
 

@@ -60,10 +60,10 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
             return;
         }
 
-        usernameText.setError(respones.getPropertyErrror("userName"));
+        usernameText.setError(respones.getPropertyError("userName"));
         usernameText.setEnabled(true);
 
-        passwordText.setError(respones.getPropertyErrror("password"));
+        passwordText.setError(respones.getPropertyError("password"));
         passwordText.setEnabled(true);
 
         loginButton.setEnabled(true);

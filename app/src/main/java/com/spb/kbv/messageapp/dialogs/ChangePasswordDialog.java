@@ -71,9 +71,9 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
 
 
 
-        currentPassword.setError(response.getPropertyErrror("currentPassword"));
-        newPassword.setError(response.getPropertyErrror("newPassword"));
-        confirmNewPassword.setError(response.getPropertyErrror("confirmNewPassword"));
+        currentPassword.setError(response.getPropertyError("currentPassword"));
+        newPassword.setError(response.getPropertyError("newPassword"));
+        confirmNewPassword.setError(response.getPropertyError("confirmNewPassword"));
 
         response.showErrorToast(getActivity());
     }

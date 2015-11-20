@@ -72,9 +72,9 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
         }
 
         response.showErrorToast(this);
-        usernameText.setError(response.getPropertyErrror("userName"));
-        emailText.setError(response.getPropertyErrror("email"));
-        passwordText.setError(response.getPropertyErrror("password"));
+        usernameText.setError(response.getPropertyError("userName"));
+        emailText.setError(response.getPropertyError("email"));
+        passwordText.setError(response.getPropertyError("password"));
 
         registerButton.setEnabled(true);
         usernameText.setEnabled(true);

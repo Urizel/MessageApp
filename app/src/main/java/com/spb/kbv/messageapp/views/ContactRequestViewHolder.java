@@ -12,11 +12,11 @@ import com.spb.kbv.messageapp.R;
 import com.spb.kbv.messageapp.services.entities.ContactRequest;
 import com.squareup.picasso.Picasso;
 
-public class ContactRequestViewAdapter extends RecyclerView.ViewHolder{
+public class ContactRequestViewHolder extends RecyclerView.ViewHolder{
     private TextView displayName;
     private TextView createdAt;
     private ImageView avatar;
-    public ContactRequestViewAdapter(LayoutInflater inflater, ViewGroup parent) {
+    public ContactRequestViewHolder(LayoutInflater inflater, ViewGroup parent) {
         super(inflater.inflate(R.layout.list_item_contact_request, parent, false));
 
         displayName = (TextView) itemView.findViewById(R.id.list_item_contact_request_displayName);
