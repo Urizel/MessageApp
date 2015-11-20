@@ -9,7 +9,11 @@
     android:layout_margin="3dp">
     <RelativeLayout
         android:layout_width="fill_parent"
-        android:layout_height="fill_parent">
+        android:layout_height="fill_parent"
+        android:padding="3dp"
+        android:background="?android:selectableItemBackground"
+        android:clickable="true"
+        android:id="@+id/list_item_message_background">
         <ImageView
             android:layout_width="64dp"
             android:layout_height="64dp"
