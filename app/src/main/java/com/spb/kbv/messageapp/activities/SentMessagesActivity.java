@@ -54,7 +54,7 @@ public class SentMessagesActivity extends BaseAuthenticatedActivity implements M
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode != REQUEST_VIEW_MESSAGE || requestCode != MessageActivity.REQUEST_IMAGE_DELETED){
+        if (requestCode != REQUEST_VIEW_MESSAGE || resultCode != MessageActivity.REQUEST_IMAGE_DELETED){
             return;
         }
 

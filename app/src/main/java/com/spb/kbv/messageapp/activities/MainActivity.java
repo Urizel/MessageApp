@@ -137,7 +137,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
 
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
-        if (requestCode == REQUEST_SHOW_MESSAGE){
+        if (requestCode == REQUEST_SHOW_MESSAGE && data != null){
             int messageId = data.getIntExtra(MessageActivity.RESULT_EXTRA_MESSAGE_ID, -1);
             if (messageId == -1) {
                 return;

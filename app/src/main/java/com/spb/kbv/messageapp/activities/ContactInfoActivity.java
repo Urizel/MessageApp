@@ -26,6 +26,7 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
     public static final int RESULT_USER_REMOVED = 101;
 
     private static final int REQUEST_SEND_MESSAGE = 1;
+    private static final int REQUEST_SHOW_MESSAGE = 2;
 
     private UserDetails userDetails;
     private MessagesAdapter adapter;
@@ -71,7 +72,7 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
     public void onMessageClicked(Message message) {
         Intent intent = new Intent(this, MessageActivity.class);
         intent.putExtra(MessageActivity.EXTRA_MESSAGE, message);
-        startActivity(intent);
+        startActivityForResult(intent, REQUEST_SHOW_MESSAGE);
     }
 
     @Subscribe
@@ -155,6 +156,24 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
         if (requestCode == REQUEST_SEND_MESSAGE && resultCode == RESULT_OK) {
             progressFrame.setVisibility(View.VISIBLE);
             bus.post(new Messages.SearchMessagesRequest(userDetails.getId(), true, true));
+        }
+        if (requestCode == REQUEST_SHOW_MESSAGE && data != null){
+            int messageId = data.getIntExtra(MessageActivity.RESULT_EXTRA_MESSAGE_ID, -1);
+            if (messageId == -1) {
+                return;
+            }
+            for (int i = 0; i < messages.size(); i++){
+                Message message = messages.get(i);
+                if (message.getId() == messageId){
+                    if (resultCode == MessageActivity.REQUEST_IMAGE_DELETED){
+                        messages.remove(message);
+                    } else {
+                        message.setIsRead(true);
+                    }
+                    adapter.notifyDataSetChanged();
+                    break;
+                }
+            }
         }
     }
 }
