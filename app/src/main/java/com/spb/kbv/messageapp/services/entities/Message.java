@@ -3,8 +3,6 @@ package com.spb.kbv.messageapp.services.entities;
 import android.os.Parcel;
 import android.os.Parcelable;
 
-import com.spb.kbv.messageapp.infrastructure.User;
-
 import java.util.Calendar;
 import java.util.GregorianCalendar;
 
@@ -13,7 +11,7 @@ public class Message implements Parcelable{
     private Calendar createdAt;
     private String shortMessage;
     private String longMessage;
-    private String messageUrl;
+    private String imageUrl;
     private UserDetails otherUser;
     private boolean isFromUs;
     private boolean isSelected;
@@ -24,7 +22,7 @@ public class Message implements Parcelable{
             Calendar createdAt,
             String shortMessage,
             String longMessage,
-            String messageUrl,
+            String imageUrl,
             UserDetails otherUser,
             boolean ifFromUs,
             boolean isRead) {
@@ -32,7 +30,7 @@ public class Message implements Parcelable{
         this.createdAt = createdAt;
         this.shortMessage = shortMessage;
         this.longMessage = longMessage;
-        this.messageUrl = messageUrl;
+        this.imageUrl = imageUrl;
         this.otherUser = otherUser;
         this.isFromUs = ifFromUs;
         this.isRead = isRead;
@@ -44,7 +42,7 @@ public class Message implements Parcelable{
         createdAt.setTimeInMillis(parcel.readLong());
         shortMessage = parcel.readString();
         longMessage = parcel.readString();
-        messageUrl = parcel.readString();
+        imageUrl = parcel.readString();
         otherUser = (UserDetails) parcel.readParcelable(UserDetails.class.getClassLoader());
         isFromUs = parcel.readByte() == 1;
         isRead = parcel.readByte() == 1;
@@ -56,7 +54,7 @@ public class Message implements Parcelable{
         destination.writeLong(createdAt.getTimeInMillis());
         destination.writeString(shortMessage);
         destination.writeString(longMessage);
-        destination.writeString(messageUrl);
+        destination.writeString(imageUrl);
         destination.writeParcelable(otherUser, 0);
         destination.writeByte((byte) (isFromUs ? 1 : 0));
         destination.writeByte((byte)(isRead ? 1 : 0));
@@ -84,8 +82,8 @@ public class Message implements Parcelable{
         return longMessage;
     }
 
-    public String getMessageUrl() {
-        return messageUrl;
+    public String getImageUrl() {
+        return imageUrl;
     }
 
     public UserDetails getOtherUser() {
@@ -112,7 +110,7 @@ public class Message implements Parcelable{
         this.isSelected = isSelected;
     }
 
-    private static final Creator<Message> CREATOR = new Creator<Message>() {
+    public static final Creator<Message> CREATOR = new Creator<Message>() {
         @Override
         public Message createFromParcel(Parcel source) {
             return new Message(source);

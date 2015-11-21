@@ -135,7 +135,7 @@ public final class Messages {
         }
     }
 
-    public static class GetMessageDetailResponse {
+    public static class GetMessageDetailResponse extends ServiceResponse {
         public Message message;
     }
 }
