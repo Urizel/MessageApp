@@ -31,6 +31,11 @@ import retrofit.converter.GsonConverter;
 
 public  class Module {
     public static void register (MessageApplication application) {
+        WebService api = createWebService(application);
+
+        new LiveAccountService(application, api);
+        new LiveContactService(application, api);
+        new LiveMessageService(application, api);
         }
 
     private static WebService createWebService(MessageApplication application) {

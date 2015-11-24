@@ -60,7 +60,7 @@ public abstract class ServiceResponse {
     }
 
     public String getPropertyError(String property){
-        if (propertyErrorsCaseInsensitive == null | propertyErrorsCaseInsensitive.size() != propertyErrors.size()){
+        if (propertyErrorsCaseInsensitive == null || propertyErrorsCaseInsensitive.size() != propertyErrors.size()){
             propertyErrorsCaseInsensitive = new TreeMap<>(String.CASE_INSENSITIVE_ORDER);
             propertyErrorsCaseInsensitive.putAll(propertyErrors);
         }
@@ -77,7 +77,7 @@ public abstract class ServiceResponse {
         try {
             Toast.makeText(context, operationError, Toast.LENGTH_LONG).show();
         } catch (Exception e) {
-            Log.e(TAG, "Can't createerror toast", e);
+            Log.e(TAG, "Can't create error toast", e);
         }
     }
 

@@ -20,7 +20,7 @@ public class RetrofitCallbackPost<T extends ServiceResponse> extends RetrofitCal
             try {
                 t = resultType.newInstance();
             } catch (Exception e) {
-                Log.e(TAG, "Could not create blink result object", e);
+                Log.e(TAG, "Could not create blank result object", e);
             }
         }
 

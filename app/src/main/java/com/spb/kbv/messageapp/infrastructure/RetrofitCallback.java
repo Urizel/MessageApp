@@ -24,6 +24,7 @@ public abstract class RetrofitCallback<T extends ServiceResponse> implements Cal
         onResponse(t);
     }
 
+    @SuppressWarnings("unchecked")
     @Override
     public void failure(RetrofitError error) {
         Log.e(TAG, "Error sending request with " + resultType.getName() + " response", error);
