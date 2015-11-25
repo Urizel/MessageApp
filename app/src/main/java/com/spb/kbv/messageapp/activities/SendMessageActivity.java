@@ -147,7 +147,7 @@ public class SendMessageActivity extends BaseAuthenticatedActivity implements Vi
         progressFrame.setAlpha(0);
         progressFrame.animate().alpha(1).setDuration(250).start();
 
-        request.setMessage(message);;
+        request.setMessage(message);
         bus.post(request);
     }
 

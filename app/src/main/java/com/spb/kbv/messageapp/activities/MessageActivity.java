@@ -13,6 +13,7 @@ import android.text.format.DateUtils;
 import android.view.Menu;
 import android.view.MenuItem;
 import android.view.View;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.spb.kbv.messageapp.R;
@@ -126,18 +127,18 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
         longMessage.setText(message.getLongMessage());
         shortMessage.setText(message.getShortMessage());
 
-        if (message.getImageUrl() != null && !message.getImageUrl().isEmpty()){
-            // TODO load image
+        if (message.getImageUrl() != null && !message.getImageUrl().isEmpty()) {
+            ImageView image = (ImageView) findViewById(R.id.activity_message_image);
+            application.getAuthedPicasso().load(message.getImageUrl()).into(image);
+        }
 
-            invalidateOptionsMenu();
+        invalidateOptionsMenu();
+        Intent defaultResult = new Intent();
+        defaultResult.putExtra(RESULT_EXTRA_MESSAGE_ID, message.getId());
+        setResult(RESULT_OK, defaultResult);
 
-            Intent defaultResult = new Intent();
-            defaultResult.putExtra(RESULT_EXTRA_MESSAGE_ID, message.getId());
-            setResult(RESULT_OK, defaultResult);
-
-            if (!message.isRead()){
-                bus.post(new Messages.MarkMessageAsReadRequest(message.getId()));
-            }
+        if (!message.isRead()){
+            bus.post(new Messages.MarkMessageAsReadRequest(message.getId()));
         }
     }
 

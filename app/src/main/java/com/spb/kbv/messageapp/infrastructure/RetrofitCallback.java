@@ -59,7 +59,7 @@ public abstract class RetrofitCallback<T extends ServiceResponse> implements Cal
                 throw new RuntimeException("Result class " + resultType.getName() + " does not extend ServiceResponse");
             }
         } catch (Exception e) {
-            Log.e(TAG, "Uknown error", e);
+            Log.e(TAG, "Unknown error", e);
             errorResult.setCriticalError("Unknown error. Please try again");
             onResponse((T) errorResult);
         }

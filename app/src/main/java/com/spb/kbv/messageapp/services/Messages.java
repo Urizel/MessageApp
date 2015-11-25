@@ -68,7 +68,7 @@ public final class Messages {
         @Override
         public void writeToParcel(Parcel out, int i) {
             out.writeParcelable(recipient, 0);
-            out.writeParcelable(recipient, 0);
+            out.writeParcelable(imagePath, 0);
             out.writeString(message);
 
         }
