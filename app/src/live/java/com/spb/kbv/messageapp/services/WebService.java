@@ -90,10 +90,10 @@ public interface WebService {
             @Part("photo")TypedFile photo,
             Callback<Messages.SendMessageResponse> callback);
 
-    @DELETE("/api/v1/message/{id}")
+    @DELETE("/api/v1/messages/{id}")
     void deleteMessage(@Path("id") int messageId, Callback<Messages.DeleteMessageResponse> callback);
 
-    @PUT("/api/v1/message/{id}/is-read")
+    @PUT("/api/v1/messages/{id}/is-read")
     void markMessageAsRead(@Path("id") int messageId, Callback<Messages.MarkMessageAsReadResponse> callback);
 
     @GET("/api/v1/messages")
@@ -109,7 +109,7 @@ public interface WebService {
             @Query("includeReceived") boolean includeReceived,
             Callback<Messages.SearchMessageResponse> callback);
 
-    @GET("/api/v1/message/{id}")
+    @GET("/api/v1/messages/{id}")
     void getMessageDetails(@Path("id") int id, Callback<Messages.GetMessageDetailResponse> callback);
 
 

@@ -55,6 +55,7 @@ public class RegisterGcmFragment extends BaseFragment {
 
         int status = checkPlayStatus();
         if (status == PLAY_SERVICES_AVAILABLE) {
+/*            Log.d(TAG, "---gcmRegistrationId()---" + gcmRegistrationId());*/
             String registrationId = gcmRegistrationId();
 
             if (registrationId.isEmpty()){
@@ -146,7 +147,7 @@ public class RegisterGcmFragment extends BaseFragment {
     private void updateGcmRegistration(String registrationId) {
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PROPERTY_REGISTRATION_ID, registrationId);
-        editor.putInt(PROPERTY_REGISTRATION_ID, getAppVersion());
+        editor.putInt(PROPERTY_APP_VERSION, getAppVersion());
         editor.apply();
 
         if (registrationId != null){

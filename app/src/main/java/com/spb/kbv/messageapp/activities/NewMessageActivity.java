@@ -199,11 +199,13 @@ public class NewMessageActivity extends BaseAuthenticatedActivity implements Vie
             setResult(RESULT_OK);
             finish();
 
-            Message message = data.getParcelableExtra(SendMessageActivity.RESULT_MESSAGE);
+            if (data != null) {
+                Message message = data.getParcelableExtra(SendMessageActivity.RESULT_MESSAGE);
 
-            Intent intent = new Intent(this, MessageActivity.class);
-            intent.putExtra(MessageActivity.EXTRA_MESSAGE, message);
-            startActivity(intent);
+                Intent intent = new Intent(this, MessageActivity.class);
+                intent.putExtra(MessageActivity.EXTRA_MESSAGE, message);
+                startActivity(intent);
+            }
         }
     }
 }

@@ -132,7 +132,7 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
             application.getAuthedPicasso().load(message.getImageUrl()).into(image);
         }
 
-        invalidateOptionsMenu();
+        /*invalidateOptionsMenu();*/
         Intent defaultResult = new Intent();
         defaultResult.putExtra(RESULT_EXTRA_MESSAGE_ID, message.getId());
         setResult(RESULT_OK, defaultResult);

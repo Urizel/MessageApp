@@ -168,7 +168,7 @@ public class SendMessageActivity extends BaseAuthenticatedActivity implements Vi
         Intent data = new Intent();
         data.putExtra(RESULT_MESSAGE, response.message);
 
-        setResult(RESULT_OK);
+        setResult(RESULT_OK, data);
         finish();
     }
 }

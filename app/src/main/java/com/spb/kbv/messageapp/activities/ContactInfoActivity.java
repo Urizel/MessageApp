@@ -32,13 +32,15 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
     private MessagesAdapter adapter;
     private ArrayList<Message> messages;
     private View progressFrame;
+    private RecyclerView recyclerView;
+
 
     @Override
     protected void onMessageAppCreate(Bundle savedInstanceState) {
         setContentView(R.layout.activity_contacts_info);
 
         userDetails = getIntent().getParcelableExtra(EXTRA_USER_DETAILS);
-        if (userDetails.getDisplayName() == null){
+        if (userDetails.getDisplayName() == null) {
             userDetails = new UserDetails(1, true, "A contact", "a_contact", "http://www.gravatar.com/avatar/1.jpg");
         }
 
@@ -56,8 +58,8 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
 
         progressFrame = findViewById(R.id.activity_contacts_info_progressFrame);
 
-        RecyclerView recyclerView = (RecyclerView)findViewById(R.id.activity_contacts_info_messages);
-        if  (isTablet){
+        recyclerView = (RecyclerView) findViewById(R.id.activity_contacts_info_messages);
+        if (isTablet) {
             recyclerView.setLayoutManager(new GridLayoutManager(this, 2));
         } else {
             recyclerView.setLayoutManager(new LinearLayoutManager(this));
@@ -65,7 +67,7 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
 
         recyclerView.setAdapter(adapter);
 
-        scheduler.postEveryMilliseconds(new Messages.SearchMessagesRequest(userDetails.getId(), true, true),1000 * 60 * 3);
+        scheduler.postEveryMilliseconds(new Messages.SearchMessagesRequest(userDetails.getId(), true, true), 1000 * 60 * 3);
     }
 
     @Override

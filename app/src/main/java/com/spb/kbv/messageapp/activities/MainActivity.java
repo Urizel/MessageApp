@@ -74,8 +74,13 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
                 onRefresh();
             }
         }, 1000 * 60 * 3);
+    }
 
-
+    @Override
+    protected void onResume() {
+        super.onResume();
+        bus.post(new Messages.SearchMessagesRequest(false, true));
+        bus.post(new Contacts.GetContactRequestRequest(false));
     }
 
     @Override
@@ -93,7 +98,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
     }
 
     @Subscribe
-    public void inMessagesLoaded(final Messages.SearchMessageResponse response){
+    public void onMessagesLoaded(final Messages.SearchMessageResponse response){
         scheduler.invokeOnResume(response.getClass(), new Runnable() {
             @Override
             public void run() {
@@ -187,7 +192,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
         };
 
         AlertDialog dialog = new AlertDialog.Builder(this)
-                .setTitle("Respont To Contact Request")
+                .setTitle("Respond To Contact Request")
                 .setView(dialogView)
                 .setPositiveButton("Accept", clickListener)
                 .setNeutralButton("Cancel", clickListener)
@@ -196,7 +201,5 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
                 .create();
 
         dialog.show();
-
-
     }
 }
