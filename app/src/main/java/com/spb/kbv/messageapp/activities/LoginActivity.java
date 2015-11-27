@@ -6,6 +6,7 @@ import android.view.View;
 
 import com.spb.kbv.messageapp.R;
 import com.spb.kbv.messageapp.fragments.LoginFragment;
+import com.spb.kbv.messageapp.fragments.RegisterGcmFragment;
 
 public class LoginActivity extends BaseActivity implements View.OnClickListener, LoginFragment.Callbacks {
 
@@ -61,7 +62,13 @@ public class LoginActivity extends BaseActivity implements View.OnClickListener,
         if (requestCode == REQUEST_NARROW_LOGIN ||
                 requestCode == REQUEST_REGISTER ||
                 requestCode == REQUEST_EXTERNAL_LOGIN)
-            finishLogin();
+
+            RegisterGcmFragment.get(new RegisterGcmFragment.GcmRegistrationCallback() {
+                @Override
+                public void gcmFinished() {
+                    finishLogin();
+                }
+            }, requestCode == REQUEST_REGISTER, getFragmentManager());
     }
 
     private void finishLogin() {

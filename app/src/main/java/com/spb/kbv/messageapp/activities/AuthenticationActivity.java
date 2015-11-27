@@ -5,11 +5,12 @@ import android.os.Bundle;
 import android.widget.Toast;
 
 import com.spb.kbv.messageapp.R;
+import com.spb.kbv.messageapp.fragments.RegisterGcmFragment;
 import com.spb.kbv.messageapp.infrastructure.Auth;
 import com.spb.kbv.messageapp.services.Account;
 import com.squareup.otto.Subscribe;
 
-public class AuthenticationActivity extends BaseActivity {
+public class AuthenticationActivity extends BaseActivity implements RegisterGcmFragment.GcmRegistrationCallback {
 
     private Auth auth;
 
@@ -40,6 +41,11 @@ public class AuthenticationActivity extends BaseActivity {
             return;
         }
 
+        RegisterGcmFragment.get(this, false, getFragmentManager());
+    }
+
+    @Override
+    public void gcmFinished() {
         Intent intent;
         String returnTo = getIntent().getStringExtra(EXTRA_RETURN_TO_ACTIVITY);
         if (returnTo != null) {

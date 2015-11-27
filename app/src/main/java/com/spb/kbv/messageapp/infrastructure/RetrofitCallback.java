@@ -8,7 +8,7 @@ import retrofit.client.Response;
 
 
 public abstract class RetrofitCallback<T extends ServiceResponse> implements Callback<T> {
-    private static final String TAG = "RetrifitCallback";
+    private static final String TAG = "RetrofitCallback";
 
     protected final Class<T> resultType;
 
