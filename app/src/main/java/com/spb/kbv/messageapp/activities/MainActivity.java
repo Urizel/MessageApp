@@ -13,6 +13,7 @@ import android.widget.TextView;
 
 import com.spb.kbv.messageapp.R;
 import com.spb.kbv.messageapp.services.Contacts;
+import com.spb.kbv.messageapp.services.Events;
 import com.spb.kbv.messageapp.services.Messages;
 import com.spb.kbv.messageapp.services.entities.ContactRequest;
 import com.spb.kbv.messageapp.services.entities.Message;
@@ -201,5 +202,43 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
                 .create();
 
         dialog.show();
+    }
+
+    @Subscribe
+    public void onNotification(final Events.OnNotificationReceivedEvent event){
+        scheduler.invokeOnResume(event.getClass(), new Runnable() {
+            @Override
+            public void run() {
+                if (event.entityOwnerId == application.getAuth().getUser().getId()){
+                    return;
+                }
+
+                if (event.entityType == Events.ENTITY_MESSAGE) {
+                    if (event.operationType == Events.OPERATION_CREATED){
+                        bus.post(new Messages.SearchMessagesRequest(false, true));
+                    } else {
+                        for (int i = 0; i < messages.size(); i++){
+                            if (messages.get(i).getId() == event.entityId){
+                                messages.remove(i);
+                                adapter.notifyDataSetChanged();
+                                break;
+                            }
+                        }
+                    }
+                } else if (event.entityType == Events.ENTITY_CONTACT_REQUEST){
+                    if (event.operationType == Events.OPERATION_CREATED) {
+                        bus.post(new Contacts.GetContactRequestRequest(false));
+                    } else {
+                        for (int i = 0; i < contactRequests.size(); i++){
+                            if (contactRequests.get(i).getUser().getId() == event.entityId){
+                                contactRequests.remove(i);
+                                adapter.notifyDataSetChanged();
+                                break;
+                            }
+                        }
+                    }
+                }
+            }
+        });
     }
 }

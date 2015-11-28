@@ -17,6 +17,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.spb.kbv.messageapp.R;
+import com.spb.kbv.messageapp.services.Events;
 import com.spb.kbv.messageapp.services.Messages;
 import com.spb.kbv.messageapp.services.entities.Message;
 import com.spb.kbv.messageapp.services.entities.UserDetails;
@@ -240,7 +241,18 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
         currentAnimation.setDuration(300);
         currentAnimation.play(translateAnimator).with(colorAnimator);
         currentAnimation.start();
+    }
 
+    @Subscribe
+    public void onNotification(Events.OnNotificationReceivedEvent event){
+        if (currentMessage == null){
+            return;
+        }
 
+        if (event.operationType == Events.OPERATION_DELETED &&
+                event.entityType == Events.ENTITY_MESSAGE &&
+                event.entityId == currentMessage.getId()) {
+            closeMessage(REQUEST_IMAGE_DELETED);
+        }
     }
 }
