@@ -99,7 +99,7 @@ public class LiveAccountService extends BaseLiveService {
     public void updateAvatar(final Account.ChangeAvatarRequest request){
         api.updateAvatar(
                 new TypedFile("image/jpeg", new File(request.newAvatarUri.getPath())),
-                new RetrofitCallbackPost<Account.ChangeAvatarResponse>(Account.ChangeAvatarResponse.class, bus){
+                new RetrofitCallbackPost<Account.ChangeAvatarResponse>(Account.ChangeAvatarResponse.class, bus) {
                     @Override
                     protected void onResponse(Account.ChangeAvatarResponse response) {
                         User user = auth.getUser();
@@ -113,10 +113,10 @@ public class LiveAccountService extends BaseLiveService {
 
     @Subscribe
     public void changePassword(Account.ChangePasswordRequest request) {
-        api.updatePassword(request, new RetrofitCallbackPost<Account.ChangePasswordResponse>(Account.ChangePasswordResponse.class, bus){
+        api.updatePassword(request, new RetrofitCallbackPost<Account.ChangePasswordResponse>(Account.ChangePasswordResponse.class, bus) {
             @Override
             protected void onResponse(Account.ChangePasswordResponse response) {
-                if (response.didSucceed()){
+                if (response.didSucceed()) {
                     auth.getUser().setHasPassword(true);
                 }
                 super.onResponse(response);
@@ -129,7 +129,10 @@ public class LiveAccountService extends BaseLiveService {
         api.loginWithExternalToken(request, new RetrofitCallbackPost<Account.LoginWithExternalTokenResponse>(Account.LoginWithExternalTokenResponse.class, bus) {
             @Override
             protected void onResponse(Account.LoginWithExternalTokenResponse response) {
-                loginUser(response);
+                if (response.didSucceed()) {
+                    loginUser(response);
+                }
+
                 super.onResponse(response);
             }
         });
@@ -137,10 +140,13 @@ public class LiveAccountService extends BaseLiveService {
 
     @Subscribe
     public void registerWithExternalToken(Account.RegisterWithExternalTokenRequest request){
-        api.registerExternal(request, new RetrofitCallbackPost<Account.RegisterWithExternalTokenResponse>(Account.RegisterWithExternalTokenResponse.class, bus){
+        api.registerExternal(request, new RetrofitCallbackPost<Account.RegisterWithExternalTokenResponse>(Account.RegisterWithExternalTokenResponse.class, bus) {
             @Override
             protected void onResponse(Account.RegisterWithExternalTokenResponse response) {
-                loginUser(response);
+                if (response.didSucceed()){
+                    loginUser(response);
+                }
+
                 super.onResponse(response);
             }
         });
