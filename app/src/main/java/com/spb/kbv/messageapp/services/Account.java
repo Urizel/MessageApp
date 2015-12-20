@@ -2,6 +2,7 @@ package com.spb.kbv.messageapp.services;
 
 import android.net.Uri;
 
+import com.google.gson.annotations.SerializedName;
 import com.spb.kbv.messageapp.infrastructure.ServiceResponse;
 import com.spb.kbv.messageapp.infrastructure.User;
 
@@ -47,17 +48,24 @@ public final class Account {
         public String userName;
         public String email;
         public String password;
-        public String clientId;
+        /*public String clientId;*/
 
         public RegisterRequest(String userName, String email, String password) {
             this.userName = userName;
             this.email = email;
             this.password = password;
-            clientId = "android";
+            /*clientId = "android";*/
         }
     }
 
     public static class RegisterResponse extends UserResponse {
+
+        @SerializedName("userName")
+        public String username;
+
+        @SerializedName("email")
+        public String email;
+
     }
 
     public static class RegisterWithExternalTokenRequest {

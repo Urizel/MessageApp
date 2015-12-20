@@ -35,8 +35,13 @@ public interface WebService {
     void loginWithExternalToken(@Body Account.LoginWithExternalTokenRequest request,
                                 Callback<Account.LoginWithExternalTokenResponse> callback);
 
-    @POST("/api/v1/account")
-    void register (@Body Account.RegisterRequest request, Callback<Account.RegisterResponse> callback);
+    @POST("/api/account")
+    @FormUrlEncoded
+    void register (/*@Body Account.RegisterRequest request*/
+            @Field("username") String username,
+            @Field("email") String email,
+            @Field("password") String password,
+            Callback<Account.RegisterResponse> callback);
 
     @POST("/api/v1/account/external")
     void registerExternal(@Body Account.RegisterWithExternalTokenRequest request, Callback<Account.RegisterWithExternalTokenResponse> callback);
@@ -130,7 +135,7 @@ public interface WebService {
         @SerializedName(".issued")
         public String issued;
 
-        @SerializedName("access_token")
+        @SerializedName("token")
         public String token;
 
         @SerializedName("error")

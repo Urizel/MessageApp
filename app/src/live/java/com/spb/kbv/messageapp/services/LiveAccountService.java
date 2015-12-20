@@ -23,18 +23,27 @@ public class LiveAccountService extends BaseLiveService {
 
     @Subscribe
     public void register(Account.RegisterRequest request){
-        api.register(request, new RetrofitCallback<Account.RegisterResponse>(Account.RegisterResponse.class) {
+        api.register(request.userName,
+                request.email,
+                request.password, new RetrofitCallback<Account.RegisterResponse>(Account.RegisterResponse.class) {
 
             @Override
             protected void onResponse(Account.RegisterResponse registerResponse) {
                 if (registerResponse.didSucceed()) {
-                    loginUser(registerResponse);
+                    Log.d("myLogs", "success " + registerResponse.displayName + " / " + registerResponse.username + " / " + registerResponse.email);
+
+                    Account.UserResponse response = new Account.UserResponse();
+                    response.userName = registerResponse.username;
+                    response.email = registerResponse.email;
+                    response.displayName = registerResponse.username;
+                    loginUser(response);
                 }
 
                 bus.post(registerResponse);
             }
         });
     }
+
 
     @Subscribe
     public void loginWithUsername(final Account.LoginWithUsernameRequest request){
@@ -166,6 +175,7 @@ public class LiveAccountService extends BaseLiveService {
             Log.d("myLogs", response.authToken);
         }
 
+        Log.d("myLogs", response.displayName + " / " + response.userName + " / " + response.email);
         User user = auth.getUser();
         user.setId(response.id);
         user.setDisplayName(response.displayName);
