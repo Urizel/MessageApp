@@ -1,5 +1,7 @@
 package com.spb.kbv.messageapp.services;
 
+import android.util.Log;
+
 import com.spb.kbv.messageapp.infrastructure.Auth;
 import com.spb.kbv.messageapp.infrastructure.MessageApplication;
 import com.spb.kbv.messageapp.infrastructure.RetrofitCallback;
@@ -39,8 +41,8 @@ public class LiveAccountService extends BaseLiveService {
         api.login(
                 request.userName,
                 request.password,
-                "android",
-                "password",
+              /*  "android",
+                "password",*/
                 new RetrofitCallback<WebService.LoginResponse>(WebService.LoginResponse.class) {
                     @Override
                     protected void onResponse(WebService.LoginResponse loginResponse) {
@@ -52,6 +54,7 @@ public class LiveAccountService extends BaseLiveService {
                         }
 
                         auth.setAuthToken(loginResponse.token);
+                        Log.d("myLogs", " TOKEN in logWUN " + loginResponse.token);
                         api.getAccount(new RetrofitCallback<Account.LoginWithLocalTokenResponse>(Account.LoginWithLocalTokenResponse.class) {
                             @Override
                             protected void onResponse(Account.LoginWithLocalTokenResponse loginWithLocalTokenResponse) {
@@ -160,6 +163,7 @@ public class LiveAccountService extends BaseLiveService {
     protected void loginUser(Account.UserResponse response) {
         if (response.authToken != null && !response.authToken.isEmpty()) {
             auth.setAuthToken(response.authToken);
+            Log.d("myLogs", response.authToken);
         }
 
         User user = auth.getUser();

@@ -130,7 +130,7 @@ public class MainActivityAdapter extends RecyclerView.Adapter {
                 viewHolder.populate("Received Messages");
             }
         } else {
-            throw new IllegalArgumentException("Cannot populate holder of type " + holder.getClass().getName());
+             throw new IllegalArgumentException("Cannot populate holder of type " + holder.getClass().getName());
         }
     }
 

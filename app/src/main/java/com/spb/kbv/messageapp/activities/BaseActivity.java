@@ -135,7 +135,6 @@ public class BaseActivity extends ActionBarActivity implements SwipeRefreshLayou
 
     public interface FadeOutListener {
         void onFadeOutEnd();
-
     }
     protected void setNavDrawer(NavDrawer navDrawer){
         this.navDrawer = navDrawer;

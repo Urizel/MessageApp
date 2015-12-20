@@ -22,13 +22,13 @@ public interface WebService {
 
 
     //Account
-    @POST("/token")
+    @POST("/api/token")
     @FormUrlEncoded
     void login(
         @Field("username") String username,
         @Field("password") String password,
-        @Field("client_id") String clientId,
-        @Field("grant_type") String grantType,
+        /*@Field("client_id") String clientId,
+        @Field("grant_type") String grantType,*/
         Callback<LoginResponse> callback);
 
     @POST("/api/v1/account/external/token")

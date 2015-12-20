@@ -52,18 +52,18 @@ public class LoginFragment extends BaseFragment implements View.OnClickListener 
     }
 
     @Subscribe
-    public void onLoginWithUserName (Account.LoginWithUsernameResponse respones){
-        respones.showErrorToast(getActivity());
+    public void onLoginWithUserName (Account.LoginWithUsernameResponse response){
+        response.showErrorToast(getActivity());
 
-        if (respones.didSucceed()){
+        if (response.didSucceed()){
             callbacks.onLoggedIn();
             return;
         }
 
-        usernameText.setError(respones.getPropertyError("userName"));
+        usernameText.setError(response.getPropertyError("userName"));
         usernameText.setEnabled(true);
 
-        passwordText.setError(respones.getPropertyError("password"));
+        passwordText.setError(response.getPropertyError("password"));
         passwordText.setEnabled(true);
 
         loginButton.setEnabled(true);

@@ -52,12 +52,12 @@ public  class Module {
                 .setEndpoint(MessageApplication.API_ENDPOINT.toString())
                 .setConverter(new GsonConverter(gson))
                 .setClient(new OkClient(client))
-                .setRequestInterceptor(new RequestInterceptor() {
+                /*.setRequestInterceptor(new RequestInterceptor() {
                     @Override
                     public void intercept(RequestFacade request) {
                         request.addHeader("X-Student", MessageApplication.TOKEN);
                     }
-                })
+                })*/
                 .build();
         return adapter.create(WebService.class);
     }
