@@ -2,6 +2,7 @@ package com.spb.kbv.messageapp.activities;
 
 import android.content.Intent;
 import android.os.Bundle;
+import android.util.Log;
 import android.widget.Toast;
 
 import com.spb.kbv.messageapp.R;

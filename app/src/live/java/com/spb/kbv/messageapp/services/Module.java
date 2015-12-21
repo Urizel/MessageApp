@@ -75,7 +75,7 @@ public  class Module {
             Request request = chain.request();
 
             if (auth.hasAuthToken()) {
-                request = request.newBuilder().addHeader("Authorization", "Bearer " + auth.getAuthToken()).build();
+                request = request.newBuilder().addHeader("x-access-token",/* "Bearer " + */auth.getAuthToken()).build();
             }
 
             Response response = chain.proceed(request);

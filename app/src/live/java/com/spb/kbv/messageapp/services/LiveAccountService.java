@@ -30,13 +30,10 @@ public class LiveAccountService extends BaseLiveService {
             @Override
             protected void onResponse(Account.RegisterResponse registerResponse) {
                 if (registerResponse.didSucceed()) {
-                    Log.d("myLogs", "success " + registerResponse.displayName + " / " + registerResponse.username + " / " + registerResponse.email);
+                    Log.d("myLogs", "success " + registerResponse.authToken + " / " + registerResponse.userName + " / " + registerResponse.email);
 
-                    Account.UserResponse response = new Account.UserResponse();
-                    response.userName = registerResponse.username;
-                    response.email = registerResponse.email;
-                    response.displayName = registerResponse.username;
-                    loginUser(response);
+                    /*registerResponse.displayName = registerResponse.userName;*/
+                    loginUser(registerResponse);
                 }
 
                 bus.post(registerResponse);
@@ -73,6 +70,13 @@ public class LiveAccountService extends BaseLiveService {
                                     bus.post(response);
                                     return;
                                 }
+
+                               /* Account.UserResponse response = new Account.UserResponse();
+                                response.userName = loginWithLocalTokenResponse.username;
+                                response.email = loginWithLocalTokenResponse.email;
+                                response.displayName = loginWithLocalTokenResponse.username;
+                                loginUser(response);*/
+                                /*loginWithLocalTokenResponse.displayName = loginWithLocalTokenResponse.userName;*/
 
                                 loginUser(loginWithLocalTokenResponse);
                                 bus.post(new Account.LoginWithUsernameResponse());
@@ -151,7 +155,7 @@ public class LiveAccountService extends BaseLiveService {
     }
 
     @Subscribe
-    public void registerWithExternalToken(Account.RegisterWithExternalTokenRequest request){
+    public void registerWithExternalToken(Account.RegisterWithExternalTokenRequest request) {
         api.registerExternal(request, new RetrofitCallbackPost<Account.RegisterWithExternalTokenResponse>(Account.RegisterWithExternalTokenResponse.class, bus) {
             @Override
             protected void onResponse(Account.RegisterWithExternalTokenResponse response) {

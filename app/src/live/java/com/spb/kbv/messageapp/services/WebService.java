@@ -46,7 +46,7 @@ public interface WebService {
     @POST("/api/v1/account/external")
     void registerExternal(@Body Account.RegisterWithExternalTokenRequest request, Callback<Account.RegisterWithExternalTokenResponse> callback);
 
-    @GET("/api/v1/account")
+    @GET("/api/account")
     void getAccount(Callback<Account.LoginWithLocalTokenResponse> callback);
 
     @PUT("/api/v1/account")

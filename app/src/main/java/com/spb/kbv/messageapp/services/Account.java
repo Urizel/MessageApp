@@ -11,12 +11,25 @@ public final class Account {
     }
 
     public static class UserResponse extends ServiceResponse{
+
+        @SerializedName("username")
+        public String userName;
+
+        @SerializedName("email")
+        public String email;
+
+        @SerializedName("token")
+        public String authToken;
+
+        @SerializedName("displayname")
+        public String displayName;
+
         public int id;
         public String avatarUrl;
-        public String displayName;
-        public String userName;
-        public String email;
-        public String authToken;
+
+        /*public String userName;*/
+        /*public String email;*/
+        /*public String authToken;*/
         public boolean hasPassword;
     }
 
@@ -42,6 +55,12 @@ public final class Account {
     }
 
     public static class LoginWithLocalTokenResponse extends UserResponse {
+
+       /* @SerializedName("username")
+        public String username;
+
+        @SerializedName("email")
+        public String email;*/
     }
 
     public static class RegisterRequest {
@@ -60,11 +79,14 @@ public final class Account {
 
     public static class RegisterResponse extends UserResponse {
 
-        @SerializedName("userName")
+        /*@SerializedName("username")
         public String username;
 
         @SerializedName("email")
         public String email;
+
+        @SerializedName("token")
+        public String token;*/
 
     }
 
