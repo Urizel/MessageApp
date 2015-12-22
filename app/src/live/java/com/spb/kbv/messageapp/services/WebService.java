@@ -35,7 +35,7 @@ public interface WebService {
     void loginWithExternalToken(@Body Account.LoginWithExternalTokenRequest request,
                                 Callback<Account.LoginWithExternalTokenResponse> callback);
 
-    @POST("/api/account")
+    @POST("/api/password")
     @FormUrlEncoded
     void register (/*@Body Account.RegisterRequest request*/
             @Field("username") String username,
@@ -49,18 +49,27 @@ public interface WebService {
     @GET("/api/account")
     void getAccount(Callback<Account.LoginWithLocalTokenResponse> callback);
 
-    @PUT("/api/v1/account")
-    void updateProfile(@Body Account.UpdateProfileRequest request, Callback<Account.UpdateProfileResponse> callback);
+    @PUT("/api/account")
+    @FormUrlEncoded
+    void updateProfile(/*@Body Account.UpdateProfileRequest request*/
+            @Field("displayname") String displayname,
+            @Field("email") String email,
+            Callback<Account.UpdateProfileResponse> callback);
 
     @Multipart
     @PUT("/api/v1/account/avatar")
     void updateAvatar(@Part("avatar")TypedFile avatar, Callback<Account.ChangeAvatarResponse> callback);
 
-    @PUT("/api/v1/account/password")
-    void updatePassword(@Body Account.ChangePasswordRequest request, Callback<Account.ChangePasswordResponse> callback);
+    @PUT("/api/password")
+    @FormUrlEncoded
+    void updatePassword(/*@Body Account.ChangePasswordRequest request,*/
+                        /*@Field ("currentPassword") String currentPassword,*/
+                        @Field ("newPassword") String newPassword,
+                        /*@Field ("confirmNewPassword") String confirmNewPassword,*/Callback<Account.ChangePasswordResponse> callback);
 
     @PUT("/api/v1/account/gcm-registration")
-    void updateGcmRegistration(@Body Account.UpdateGcmRegistrationRequest request, Callback<Account.UpdateGcmRegistrationResponse> callback);
+    void updateGcmRegistration(@Body Account.UpdateGcmRegistrationRequest request,
+                               Callback<Account.UpdateGcmRegistrationResponse> callback);
 
     //----------------------------------------------------------------------------------------
     //Contacts

@@ -71,13 +71,6 @@ public class LiveAccountService extends BaseLiveService {
                                     return;
                                 }
 
-                               /* Account.UserResponse response = new Account.UserResponse();
-                                response.userName = loginWithLocalTokenResponse.username;
-                                response.email = loginWithLocalTokenResponse.email;
-                                response.displayName = loginWithLocalTokenResponse.username;
-                                loginUser(response);*/
-                                /*loginWithLocalTokenResponse.displayName = loginWithLocalTokenResponse.userName;*/
-
                                 loginUser(loginWithLocalTokenResponse);
                                 bus.post(new Account.LoginWithUsernameResponse());
                             }
@@ -99,7 +92,7 @@ public class LiveAccountService extends BaseLiveService {
 
     @Subscribe
     public void updateProfile(final Account.UpdateProfileRequest request){
-        api.updateProfile(request, new RetrofitCallbackPost<Account.UpdateProfileResponse>(Account.UpdateProfileResponse.class, bus) {
+        api.updateProfile(request.displayName, request.email, new RetrofitCallbackPost<Account.UpdateProfileResponse>(Account.UpdateProfileResponse.class, bus) {
             @Override
             protected void onResponse(Account.UpdateProfileResponse response) {
                 User user = auth.getUser();
@@ -129,11 +122,13 @@ public class LiveAccountService extends BaseLiveService {
 
     @Subscribe
     public void changePassword(Account.ChangePasswordRequest request) {
-        api.updatePassword(request, new RetrofitCallbackPost<Account.ChangePasswordResponse>(Account.ChangePasswordResponse.class, bus) {
+        api.updatePassword(/*request.currentPassword,*/
+        request.newPassword,
+        /*request.confirmNewPassword,*/ new RetrofitCallbackPost<Account.ChangePasswordResponse>(Account.ChangePasswordResponse.class, bus) {
             @Override
             protected void onResponse(Account.ChangePasswordResponse response) {
                 if (response.didSucceed()) {
-                    auth.getUser().setHasPassword(true);
+                    /*auth.getUser().setHasPassword(true);*/
                 }
                 super.onResponse(response);
             }

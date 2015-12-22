@@ -149,19 +149,23 @@ public final class Account {
         }
     }
     public static class UpdateProfileResponse extends ServiceResponse {
+
+        @SerializedName("displayname")
         public String displayName;
+
+        @SerializedName("email")
         public String email;
     }
 
     public static class ChangePasswordRequest {
-        public String currentPassword;
+        /*public String currentPassword;*/
         public String newPassword;
-        public String confirmNewPassword;
+        /*public String confirmNewPassword;*/
 
-        public ChangePasswordRequest(String currentPassword, String newPassword, String confirmNewPassword){
-            this.currentPassword = currentPassword;
+        public ChangePasswordRequest(/*String currentPassword, */String newPassword/*, String confirmNewPassword*/){
+            /*this.currentPassword = currentPassword;*/
             this.newPassword = newPassword;
-            this.confirmNewPassword = confirmNewPassword;
+            /*this.confirmNewPassword = confirmNewPassword;*/
         }
 
     }

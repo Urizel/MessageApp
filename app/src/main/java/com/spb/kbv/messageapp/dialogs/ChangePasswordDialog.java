@@ -46,14 +46,19 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
 
     @Override
     public void onClick(View view) {
+        if (!newPassword.getText().toString().equals(confirmNewPassword.getText().toString())){
+            confirmNewPassword.setError("Passwords don't match");
+            return;
+        }
+
         progressDialog = new ProgressDialog.Builder(getActivity())
                 .setTitle("Changing Password")
                 .setCancelable(false)
                 .show();
         bus.post(new Account.ChangePasswordRequest(
-                currentPassword.getText().toString(),
-                newPassword.getText().toString(),
-                confirmNewPassword.getText().toString()));
+                /*currentPassword.getText().toString(),*/
+                newPassword.getText().toString()));
+                /*confirmNewPassword.getText().toString()));*/
     }
 
     @Subscribe
@@ -65,7 +70,7 @@ public class ChangePasswordDialog extends BaseDialogFragment implements View.OnC
         if (response.didSucceed()){
             Toast.makeText(getActivity(), "Password Updated", Toast.LENGTH_LONG).show();
             dismiss();
-            application.getAuth().getUser().setHasPassword(true);
+            /*application.getAuth().getUser().setHasPassword(true);*/
             return;
         }
 

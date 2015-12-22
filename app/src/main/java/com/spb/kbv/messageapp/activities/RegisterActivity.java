@@ -56,6 +56,12 @@ public class RegisterActivity extends BaseActivity implements View.OnClickListen
 
     @Override
     public void onClick(View view) {
+
+        if (passwordText.getText().toString().isEmpty()){
+            passwordText.setError("Enter a password");
+            return;
+        }
+
         if (view == registerButton) {
             progressBar.setVisibility(View.VISIBLE);
             registerButton.setText("");
