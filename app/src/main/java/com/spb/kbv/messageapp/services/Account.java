@@ -118,6 +118,7 @@ public final class Account {
     }
 
     public static class ChangeAvatarResponse extends ServiceResponse {
+        @SerializedName("url")
         public String avatarUrl;
     }
 

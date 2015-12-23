@@ -111,6 +111,7 @@ public class LiveAccountService extends BaseLiveService {
                 new RetrofitCallbackPost<Account.ChangeAvatarResponse>(Account.ChangeAvatarResponse.class, bus) {
                     @Override
                     protected void onResponse(Account.ChangeAvatarResponse response) {
+                        Log.d("myLogs", " uri : " + response.avatarUrl);
                         User user = auth.getUser();
                         user.setAvatarUrl(response.avatarUrl);
                         super.onResponse(response);

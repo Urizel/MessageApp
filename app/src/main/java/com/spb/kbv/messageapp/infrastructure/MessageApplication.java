@@ -2,6 +2,7 @@ package com.spb.kbv.messageapp.infrastructure;
 
 import android.app.Application;
 import android.net.Uri;
+import android.util.Log;
 
 import com.spb.kbv.messageapp.services.Module;
 import com.squareup.okhttp.Interceptor;
@@ -38,9 +39,12 @@ public class MessageApplication extends Application{
         client.interceptors().add(new Interceptor() {
             @Override
             public Response intercept(Chain chain) throws IOException {
+                Log.d("myLogs", "token in createPicasso " + getAuth().getAuthToken());
                 Request newRequest = chain.request().newBuilder()
-                        .addHeader("Authorization", "Bearer " + getAuth().getAuthToken())
-                        .addHeader("X-Student", TOKEN)
+                        .addHeader(/*"Authorization", "Bearer " + getAuth().getAuthToken()*/
+                                "x-access-token", "Bearer " + getAuth().getAuthToken())
+
+                        /*.addHeader("X-Student", TOKEN)*/
                         .build();
 
                 return chain.proceed(newRequest);

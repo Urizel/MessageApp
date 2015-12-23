@@ -35,7 +35,7 @@ public interface WebService {
     void loginWithExternalToken(@Body Account.LoginWithExternalTokenRequest request,
                                 Callback<Account.LoginWithExternalTokenResponse> callback);
 
-    @POST("/api/password")
+    @POST("/api/account")
     @FormUrlEncoded
     void register (/*@Body Account.RegisterRequest request*/
             @Field("username") String username,
@@ -57,7 +57,7 @@ public interface WebService {
             Callback<Account.UpdateProfileResponse> callback);
 
     @Multipart
-    @PUT("/api/v1/account/avatar")
+    @PUT("/api/avatar")
     void updateAvatar(@Part("avatar")TypedFile avatar, Callback<Account.ChangeAvatarResponse> callback);
 
     @PUT("/api/password")
