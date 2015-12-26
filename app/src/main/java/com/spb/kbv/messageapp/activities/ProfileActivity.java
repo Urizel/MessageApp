@@ -9,6 +9,7 @@ import android.net.Uri;
 import android.os.Bundle;
 import android.os.Parcelable;
 import android.provider.MediaStore;
+import android.util.Log;
 import android.view.ActionMode;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -77,7 +78,7 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
         User user = application.getAuth().getUser();
         getSupportActionBar().setTitle(user.getDisplayName());
-        Picasso.with(this).load(user.getAvatarUrl()).into(avatarView);
+        application.getAuthedPicasso().load(user.getAvatarUrl()).skipMemoryCache().into(avatarView);
 
         if (savedState == null) {
             displayNameText.setText(user.getDisplayName());
@@ -176,16 +177,19 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         setProgressBarVisible(false);
     }
 
-    @Subscribe
+   /* @Subscribe
     public void onAvatarUpdateFromEventForExample(Account.AvatarUpdateEvent event){
         avatarView.setImageURI(null);
         avatarView.setImageURI(event.uri);
-    }
+    }*/
 
     @Subscribe
     public void onUserDetailsUpdated(Account.UserDetailsUpdateEvent event){
         getSupportActionBar().setTitle(event.user.getDisplayName());
-        Picasso.with(this).load(event.user.getAvatarUrl()).into(avatarView);
+        Log.d("myLogs", "in UserDetailsUpdateEvent url = " + event.user.getAvatarUrl());
+        /*Picasso.with(this).load(event.user.getAvatarUrl()).into(avatarView);*/
+        /*avatarView.setImageURI(null);*/
+        application.getAuthedPicasso().load(event.user.getAvatarUrl()).skipMemoryCache().into(avatarView);
 
     }
 

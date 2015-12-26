@@ -42,7 +42,7 @@ public class MessageApplication extends Application{
                 Log.d("myLogs", "token in createPicasso " + getAuth().getAuthToken());
                 Request newRequest = chain.request().newBuilder()
                         .addHeader(/*"Authorization", "Bearer " + getAuth().getAuthToken()*/
-                                "x-access-token", "Bearer " + getAuth().getAuthToken())
+                                "x-access-token", /*"Bearer " +*/ getAuth().getAuthToken())
 
                         /*.addHeader("X-Student", TOKEN)*/
                         .build();
