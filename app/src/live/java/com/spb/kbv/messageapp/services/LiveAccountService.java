@@ -65,6 +65,7 @@ public class LiveAccountService extends BaseLiveService {
                             @Override
                             protected void onResponse(Account.LoginWithLocalTokenResponse loginWithLocalTokenResponse) {
                                 if (!loginWithLocalTokenResponse.didSucceed()){
+                                    Log.d("miLogs", " loginWithLocalTokenResponse not succeed");
                                     Account.LoginWithUsernameResponse response = new Account.LoginWithUsernameResponse();
                                     response.setOperationError(loginWithLocalTokenResponse.getOperationError());
                                     bus.post(response);

@@ -73,7 +73,7 @@ public interface WebService {
 
     //----------------------------------------------------------------------------------------
     //Contacts
-    @GET("/api/v1/users")
+    @GET("/api/users")
     void searchUsers(@Query("query") String query, Callback<Contacts.SearchUserResponse> callback);
 
     @POST("/api/v1/contact-requests/{user}")

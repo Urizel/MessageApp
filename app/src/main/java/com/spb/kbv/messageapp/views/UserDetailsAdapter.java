@@ -9,19 +9,24 @@ import android.widget.TextView;
 
 import com.spb.kbv.messageapp.R;
 import com.spb.kbv.messageapp.activities.BaseActivity;
+import com.spb.kbv.messageapp.infrastructure.MessageApplication;
 import com.spb.kbv.messageapp.services.entities.UserDetails;
 import com.squareup.picasso.Picasso;
 
 public class UserDetailsAdapter extends ArrayAdapter<UserDetails>{
     private LayoutInflater inflater;
+    public Picasso mPicasso;
+
 
     public UserDetailsAdapter (BaseActivity activity) {
         super(activity, 0);
         inflater = activity.getLayoutInflater();
+        mPicasso = activity.getMessageAppApplication().getAuthedPicasso();
     }
 
     @Override
     public View getView(int position, View convertView, ViewGroup parent) {
+
 
         ViewHolder holder;
         UserDetails details = getItem(position);
@@ -35,7 +40,7 @@ public class UserDetailsAdapter extends ArrayAdapter<UserDetails>{
         }
 
         holder.displayName.setText(details.getDisplayName());
-        Picasso.with(getContext()).load(details.getAvatarUrl()).into(holder.avatar);
+        mPicasso.load(details.getAvatarUrl()).into(holder.avatar);
 
         return convertView;
     }

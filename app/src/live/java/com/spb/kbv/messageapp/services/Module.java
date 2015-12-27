@@ -42,7 +42,7 @@ public  class Module {
         Gson gson = new GsonBuilder()
                 .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
                 .registerTypeAdapter(Calendar.class, new DateDeserializer())
-                .setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)
+                /*.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)*/
                 .create();
 
         OkHttpClient client = new OkHttpClient();

@@ -21,12 +21,12 @@ public final class Account {
         @SerializedName("token")
         public String authToken;
 
-        @SerializedName("displayname")
+        @SerializedName("displayName")
         public String displayName;
 
         public int id;
 
-        @SerializedName("avatar")
+        @SerializedName("avatarUrl")
         public String avatarUrl;
 
         /*public String userName;*/
@@ -153,7 +153,7 @@ public final class Account {
     }
     public static class UpdateProfileResponse extends ServiceResponse {
 
-        @SerializedName("displayname")
+        @SerializedName("displayName")
         public String displayName;
 
         @SerializedName("email")

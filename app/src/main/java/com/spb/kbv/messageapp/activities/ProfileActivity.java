@@ -78,7 +78,9 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
 
         User user = application.getAuth().getUser();
         getSupportActionBar().setTitle(user.getDisplayName());
-        application.getAuthedPicasso().load(user.getAvatarUrl()).skipMemoryCache().into(avatarView);
+        if (user.getAvatarUrl() != null && !user.getAvatarUrl().isEmpty()) {
+            application.getAuthedPicasso().load(user.getAvatarUrl()).skipMemoryCache().into(avatarView);
+        }
 
         if (savedState == null) {
             displayNameText.setText(user.getDisplayName());

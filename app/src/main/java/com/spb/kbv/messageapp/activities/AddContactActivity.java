@@ -93,6 +93,11 @@ public class AddContactActivity extends BaseAuthenticatedActivity implements Ada
 
     @Subscribe
     public void onUsersSearched(Contacts.SearchUserResponse response){
+        Log.d("myLogs", "my response");
+        Log.d("myLogs", "my response" + response.users);
+        /*if (!response.users.toString().isEmpty()){
+            Log.d("myLogs", "my response" + response.users.toString());
+        }*/
         progressFrame.setVisibility(View.GONE);
 
         if(!response.didSucceed()){

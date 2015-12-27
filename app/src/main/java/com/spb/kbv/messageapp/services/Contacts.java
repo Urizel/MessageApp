@@ -1,5 +1,6 @@
 package com.spb.kbv.messageapp.services;
 
+import com.google.gson.annotations.SerializedName;
 import com.spb.kbv.messageapp.infrastructure.ServiceResponse;
 import com.spb.kbv.messageapp.services.entities.ContactRequest;
 import com.spb.kbv.messageapp.services.entities.UserDetails;
@@ -80,6 +81,7 @@ public final class Contacts {
 
     public static class SearchUserResponse extends ServiceResponse {
         public List<UserDetails> users;
+        @SerializedName("query")
         public String query;
     }
 }

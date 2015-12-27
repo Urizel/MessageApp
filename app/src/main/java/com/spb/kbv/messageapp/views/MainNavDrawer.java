@@ -64,7 +64,9 @@ public class MainNavDrawer extends NavDrawer {
 
         User loggedInUser = activity.getMessageAppApplication().getAuth().getUser();
         displayNameText.setText(loggedInUser.getUserName());
-        Picasso.with(activity).load(loggedInUser.getAvatarUrl()).into(avatarImage);
+        if (loggedInUser.getAvatarUrl() != null && !loggedInUser.getAvatarUrl().isEmpty()) {
+            Picasso.with(activity).load(loggedInUser.getAvatarUrl()).into(avatarImage);
+        }
     }
 
     @Subscribe
