@@ -115,6 +115,7 @@ public class AddContactActivity extends BaseAuthenticatedActivity implements Ada
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
+        /*Log.d("myLogs", "__________id == " + adapter.getItem(position).getId());*/
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setPositiveButton("Send Contact Request", new DialogInterface.OnClickListener() {
                     @Override
@@ -130,7 +131,7 @@ public class AddContactActivity extends BaseAuthenticatedActivity implements Ada
     public void sendContactRequest(UserDetails user){
         selectedUser = user;
         progressFrame.setVisibility(View.VISIBLE);
-        bus.post(new Contacts.SendContactRequestRequest(user.getId()));
+        bus.post(new Contacts.SendContactRequestRequest(user.getUsername()/*getId()*/));
     }
 
     @Subscribe

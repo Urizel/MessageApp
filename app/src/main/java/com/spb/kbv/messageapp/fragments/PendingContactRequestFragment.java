@@ -1,6 +1,7 @@
 package com.spb.kbv.messageapp.fragments;
 
 import android.os.Bundle;
+import android.util.Log;
 import android.view.LayoutInflater;
 import android.view.View;
 import android.view.ViewGroup;
@@ -31,6 +32,7 @@ public class PendingContactRequestFragment extends BaseFragment {
 
     @Subscribe
     public void onGetContactRequest(final Contacts.GetContactRequestResponse response){
+        Log.d("myLogs", " got requests " + response.requests.get(1).getUser().getAvatarUrl());
         scheduler.invokeOnResume(Contacts.GetContactRequestResponse.class, new Runnable() {
             @Override
             public void run() {

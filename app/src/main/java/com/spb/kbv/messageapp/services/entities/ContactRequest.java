@@ -5,9 +5,9 @@ import java.util.Calendar;
 public class ContactRequest {
     private boolean isFromUs;
     private UserDetails user;
-    private Calendar createdAt;
+    private String createdAt;
 
-    public ContactRequest(boolean isFromUs, UserDetails user, Calendar createdAt) {
+    public ContactRequest(boolean isFromUs, UserDetails user, String createdAt) {
         this.isFromUs = isFromUs;
         this.user = user;
         this.createdAt = createdAt;
@@ -21,7 +21,7 @@ public class ContactRequest {
         return user;
     }
 
-    public Calendar getCreatedAt() {
+    public String getCreatedAt() {
         return createdAt;
     }
 }

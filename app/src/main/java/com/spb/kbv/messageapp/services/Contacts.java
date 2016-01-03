@@ -35,10 +35,12 @@ public final class Contacts {
     }
 
     public static class SendContactRequestRequest{
-        public int userId;
+        /*public int userId;*/
+        public String username;
 
-        public SendContactRequestRequest(int userId) {
-            this.userId = userId;
+        public SendContactRequestRequest(String username) {
+            this.username = username;
+            /*this.userId = userId;*/
         }
     }
 

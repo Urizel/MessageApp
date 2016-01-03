@@ -17,7 +17,7 @@ public class LiveContactService extends BaseLiveService {
 
     @Subscribe
     public void sendContactRequest(Contacts.SendContactRequestRequest request){
-        api.sendContactRequest(request.userId, new RetrofitCallbackPost<>(Contacts.SendContactRequestResponse.class, bus));
+        api.sendContactRequest(request.username/*.userId*/, new RetrofitCallbackPost<>(Contacts.SendContactRequestResponse.class, bus));
     }
 
     @Subscribe

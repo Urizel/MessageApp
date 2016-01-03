@@ -28,10 +28,10 @@ public class ContactRequestViewHolder extends RecyclerView.ViewHolder{
         displayName.setText(request.getUser().getDisplayName());
         Picasso.with(context).load(request.getUser().getAvatarUrl()).into(avatar);
 
-        String dateText = DateUtils.formatDateTime(
+        String dateText = "111";/*DateUtils.formatDateTime(
                 context,
                 request.getCreatedAt().getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);*/
 
         if (request.isFromUs()){
             createdAt.setText("Sent at " + dateText);

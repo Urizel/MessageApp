@@ -76,8 +76,8 @@ public interface WebService {
     @GET("/api/users")
     void searchUsers(@Query("query") String query, Callback<Contacts.SearchUserResponse> callback);
 
-    @POST("/api/v1/contact-requests/{user}")
-    void sendContactRequest (@Path("user") int userId, Callback<Contacts.SendContactRequestResponse> callback);
+    @POST("/api/contact-requests/{user}")
+    void sendContactRequest (@Path("user") String username/*int userId*/, Callback<Contacts.SendContactRequestResponse> callback);
 
     @PUT("/api/v1/contact-requests/{user}")
     void respondToContactRequest(@Path("user") int userId, @Body RespondToContactRequest request, Callback<Contacts.RespondToContactRequestResponse> callback);
@@ -85,7 +85,7 @@ public interface WebService {
     @DELETE("/api/v1/contacts/{user}")
     void removeContact (@Path("user") int userId, Callback<Contacts.RemoveContactResponse> callback);
 
-    @GET("/api/v1/contact-requests/sent")
+    @GET("/api/contact-requests/sent")
     void getContactRequestsFromUs(Callback<Contacts.GetContactRequestResponse> callback);
 
     @GET("/api/v1/contact-requests/received")

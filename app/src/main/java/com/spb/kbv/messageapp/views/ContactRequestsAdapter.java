@@ -15,9 +15,11 @@ import com.squareup.picasso.Picasso;
 
 public class ContactRequestsAdapter extends ArrayAdapter<ContactRequest> {
     private LayoutInflater inflater;
+    private Picasso mPicasso;
     public ContactRequestsAdapter(BaseActivity activity) {
         super(activity, 0);
         inflater = activity.getLayoutInflater();
+        mPicasso = activity.getMessageAppApplication().getAuthedPicasso();
     }
 
     @Override
@@ -36,12 +38,14 @@ public class ContactRequestsAdapter extends ArrayAdapter<ContactRequest> {
         }
 
         holder.displayName.setText(request.getUser().getDisplayName());
-        Picasso.with(getContext()).load(request.getUser().getAvatarUrl()).into(holder.avatar);
+        if (!request.getUser().getAvatarUrl().isEmpty()) {
+            mPicasso.load(request.getUser().getAvatarUrl()).into(holder.avatar);
+        }
 
-        String createdAt = DateUtils.formatDateTime(
+        String createdAt = "2222";/*DateUtils.formatDateTime(
                 getContext(),
                 request.getCreatedAt().getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);*/
 
         if (request.isFromUs()){
             holder.createdAt.setText("Sent at " + createdAt);
