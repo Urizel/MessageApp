@@ -97,7 +97,7 @@ public interface WebService {
     //---------------------------------------------------------------------
     //Messages
     @Multipart
-    @POST("/api/v1/messages")
+    @POST("/api/messages")
     void sendMessgaes(
             @Part("message")TypedString message,
             @Part("to")TypedString to,
@@ -117,7 +117,7 @@ public interface WebService {
         @Query("includeReceived") boolean includeReceived,
         Callback<Messages.SearchMessageResponse> callback);
 
-    @GET("/api/v1/messages")
+    @GET("/api/messages")
     void searchMessages(
             @Query("includeSent") boolean includeSent,
             @Query("includeReceived") boolean includeReceived,

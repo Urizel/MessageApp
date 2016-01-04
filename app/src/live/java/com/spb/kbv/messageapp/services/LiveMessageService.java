@@ -19,7 +19,7 @@ public class LiveMessageService extends BaseLiveService {
     public void sendMessage(Messages.SendMessageRequest request){
         api.sendMessgaes(
                 new TypedString(request.getMessage()),
-                new TypedString(Integer.toString(request.getRecipient().getId())),
+                new TypedString(/*Integer.toString(*/request.getRecipient().getUsername()/*getId())*/),
                 new TypedFile("image/jpeg", new File(request.getImagePath().getPath())),
                 new RetrofitCallbackPost<>(Messages.SendMessageResponse.class, bus));
     }

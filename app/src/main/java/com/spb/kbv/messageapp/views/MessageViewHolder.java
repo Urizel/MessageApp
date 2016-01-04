@@ -9,6 +9,7 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.spb.kbv.messageapp.R;
+import com.spb.kbv.messageapp.activities.BaseActivity;
 import com.spb.kbv.messageapp.services.entities.Message;
 import com.squareup.picasso.Picasso;
 
@@ -35,13 +36,13 @@ public class MessageViewHolder extends RecyclerView.ViewHolder{
         return backgroundView;
     }
 
-    public void populate(Context context, Message message){
+    public void populate(BaseActivity activity, Message message){
         itemView.setTag(message);
 
-        Picasso.with(context).load(message.getOtherUser().getAvatarUrl()).into(avatar);
+        activity.getMessageAppApplication().getAuthedPicasso().load(message.getOtherUser().getAvatarUrl()).into(avatar);
 
         String createdAt = DateUtils.formatDateTime(
-                context,
+                activity.getApplicationContext(),
                 message.getCreatedAt().getTimeInMillis(),
                 DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
 
@@ -61,7 +62,7 @@ public class MessageViewHolder extends RecyclerView.ViewHolder{
             cardView.setCardElevation(3);
         }
 
-        cardView.setCardBackgroundColor(context.getResources().getColor(colorResourceId));
+        cardView.setCardBackgroundColor(activity.getApplicationContext().getResources().getColor(colorResourceId));
     }
 
 }

@@ -81,7 +81,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
     @Override
     protected void onResume() {
         super.onResume();
-        /*bus.post(new Messages.SearchMessagesRequest(false, true));*/
+        bus.post(new Messages.SearchMessagesRequest(false, true));
         bus.post(new Contacts.GetContactRequestRequest(false));
     }
 
@@ -101,6 +101,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
 
     @Subscribe
     public void onMessagesLoaded(final Messages.SearchMessageResponse response){
+        Log.d("myLogs", "onMessagesLoaded-------- ");
         scheduler.invokeOnResume(response.getClass(), new Runnable() {
             @Override
             public void run() {
