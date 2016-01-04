@@ -9,6 +9,8 @@ import android.widget.ImageView;
 import android.widget.TextView;
 
 import com.spb.kbv.messageapp.R;
+import com.spb.kbv.messageapp.activities.BaseActivity;
+import com.spb.kbv.messageapp.infrastructure.MessageApplication;
 import com.spb.kbv.messageapp.services.entities.ContactRequest;
 import com.squareup.picasso.Picasso;
 
@@ -24,9 +26,9 @@ public class ContactRequestViewHolder extends RecyclerView.ViewHolder{
         avatar = (ImageView) itemView.findViewById(R.id.list_item_contact_request_avatar);
     }
 
-    public void populate (Context context, ContactRequest request) {
+    public void populate (BaseActivity activity, ContactRequest request) {
         displayName.setText(request.getUser().getDisplayName());
-        Picasso.with(context).load(request.getUser().getAvatarUrl()).into(avatar);
+        activity.getMessageAppApplication().getAuthedPicasso().load(request.getUser().getAvatarUrl()).into(avatar);
 
         String dateText = "111";/*DateUtils.formatDateTime(
                 context,

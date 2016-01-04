@@ -48,11 +48,13 @@ public final class Contacts {
     }
 
     public static class RespondToContactRequestRequest {
-        public int contactRequestId;
+        /*public int contactRequestId;*/
+        public String username;
         public boolean accept;
 
-        public RespondToContactRequestRequest(int contactRequestId, boolean accept) {
-            this.contactRequestId = contactRequestId;
+        public RespondToContactRequestRequest(/*int contactRequestId,*/ String username, boolean accept) {
+            /*this.contactRequestId = contactRequestId;*/
+            this.username = username;
             this.accept = accept;
         }
     }
@@ -61,15 +63,17 @@ public final class Contacts {
     }
 
     public static class RemoveContactRequest{
-        public int contactId;
+        /*public int contactId;*/
+        public String username;
 
-        public RemoveContactRequest(int contactId) {
-            this.contactId = contactId;
+        public RemoveContactRequest(String username/*int contactId*/) {
+            this.username = username;
         }
     }
 
     public static class RemoveContactResponse extends ServiceResponse {
-        public int removedContactId;
+        /*public int removedContactId;*/
+        public String removedContactUsername;
 
     }
 

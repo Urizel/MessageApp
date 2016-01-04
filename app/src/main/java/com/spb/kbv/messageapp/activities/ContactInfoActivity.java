@@ -100,7 +100,7 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
     }
     private void doRemoveContact(){
         progressFrame.setVisibility(View.VISIBLE);
-        bus.post(new Contacts.RemoveContactRequest(userDetails.getId()));
+        bus.post(new Contacts.RemoveContactRequest(userDetails.getUsername()/*getId()*/));
     }
 
     @Subscribe

@@ -42,7 +42,10 @@ public class UserDetailsAdapter extends ArrayAdapter<UserDetails>{
         holder.displayName.setText(details.getDisplayName());
         if (!details.getAvatarUrl().isEmpty()){
             mPicasso.load(details.getAvatarUrl()).into(holder.avatar);
+        } else {
+        holder.avatar.setImageResource(R.drawable.ic_action_person);
         }
+
         return convertView;
     }
 

@@ -7,6 +7,7 @@ import android.os.Bundle;
 import android.support.v7.widget.GridLayoutManager;
 import android.support.v7.widget.LinearLayoutManager;
 import android.support.v7.widget.RecyclerView;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -80,7 +81,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
     @Override
     protected void onResume() {
         super.onResume();
-        bus.post(new Messages.SearchMessagesRequest(false, true));
+        /*bus.post(new Messages.SearchMessagesRequest(false, true));*/
         bus.post(new Contacts.GetContactRequestRequest(false));
     }
 
@@ -118,6 +119,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
 
     @Subscribe
     public void onContactRequestsLoaded (final Contacts.GetContactRequestResponse response){
+        /*Log.d("myLogs", "GetContactRequestResponse-------- " + response.requests.get(0).getUser().getUsername());*/
         scheduler.invokeOnResume(response.getClass(), new Runnable() {
             @Override
             public void run() {
@@ -188,7 +190,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
                     adapter.notifyItemRemoved(0);
                 }
 
-                bus.post(new Contacts.RespondToContactRequestRequest(request.getUser().getId(), doAccept));
+                bus.post(new Contacts.RespondToContactRequestRequest(request.getUser().getUsername()/*getId()*/, doAccept));
             }
         };
 

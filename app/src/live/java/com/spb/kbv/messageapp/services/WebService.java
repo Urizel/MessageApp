@@ -79,19 +79,19 @@ public interface WebService {
     @POST("/api/contact-requests/{user}")
     void sendContactRequest (@Path("user") String username/*int userId*/, Callback<Contacts.SendContactRequestResponse> callback);
 
-    @PUT("/api/v1/contact-requests/{user}")
-    void respondToContactRequest(@Path("user") int userId, @Body RespondToContactRequest request, Callback<Contacts.RespondToContactRequestResponse> callback);
+    @PUT("/api/contact-requests/{user}")
+    void respondToContactRequest(@Path("user")String username/*int userId*/, @Body RespondToContactRequest request, Callback<Contacts.RespondToContactRequestResponse> callback);
 
-    @DELETE("/api/v1/contacts/{user}")
-    void removeContact (@Path("user") int userId, Callback<Contacts.RemoveContactResponse> callback);
+    @DELETE("/api/contacts/{user}")
+    void removeContact (@Path("user") String username/*int userId*/, Callback<Contacts.RemoveContactResponse> callback);
 
     @GET("/api/contact-requests/sent")
     void getContactRequestsFromUs(Callback<Contacts.GetContactRequestResponse> callback);
 
-    @GET("/api/v1/contact-requests/received")
+    @GET("/api/contact-requests/received")
     void getCOntactRequestsToUs(Callback<Contacts.GetContactRequestResponse> callback);
 
-    @GET("/api/v1/contacts")
+    @GET("/api/contacts")
     void getContacts(Callback<Contacts.GetContactResponse> callback);
 
     //---------------------------------------------------------------------

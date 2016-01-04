@@ -40,7 +40,10 @@ public class ContactRequestsAdapter extends ArrayAdapter<ContactRequest> {
         holder.displayName.setText(request.getUser().getDisplayName());
         if (!request.getUser().getAvatarUrl().isEmpty()) {
             mPicasso.load(request.getUser().getAvatarUrl()).into(holder.avatar);
+        } else {
+            holder.avatar.setImageResource(R.drawable.ic_action_person);
         }
+
 
         String createdAt = "2222";/*DateUtils.formatDateTime(
                 getContext(),

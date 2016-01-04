@@ -39,7 +39,8 @@ public class LiveContactService extends BaseLiveService {
         }
 
         api.respondToContactRequest(
-                request.contactRequestId,
+                /*request.contactRequestId*/
+                request.username,
                 new WebService.RespondToContactRequest(response),
                 new RetrofitCallbackPost<>(Contacts.RespondToContactRequestResponse.class, bus));
     }
@@ -51,7 +52,7 @@ public class LiveContactService extends BaseLiveService {
 
     @Subscribe
     public void removeContacts(Contacts.RemoveContactRequest request){
-        api.removeContact(request.contactId, new RetrofitCallbackPost<>(Contacts.RemoveContactResponse.class, bus));
+        api.removeContact(request.username/*.contactId*/, new RetrofitCallbackPost<>(Contacts.RemoveContactResponse.class, bus));
     }
 
 }
