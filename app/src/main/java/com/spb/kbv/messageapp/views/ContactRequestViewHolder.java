@@ -28,12 +28,16 @@ public class ContactRequestViewHolder extends RecyclerView.ViewHolder{
 
     public void populate (BaseActivity activity, ContactRequest request) {
         displayName.setText(request.getUser().getDisplayName());
-        activity.getMessageAppApplication().getAuthedPicasso().load(request.getUser().getAvatarUrl()).into(avatar);
+        if (request.getUser().getAvatarUrl().isEmpty()){
+            avatar.setImageResource(R.drawable.ic_action_person);
+        } else {
+            activity.getMessageAppApplication().getAuthedPicasso().load(request.getUser().getAvatarUrl()).into(avatar);
+        }
 
-        String dateText = "111";/*DateUtils.formatDateTime(
-                context,
+        String dateText = DateUtils.formatDateTime(
+                activity.getApplicationContext(),
                 request.getCreatedAt().getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);*/
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
 
         if (request.isFromUs()){
             createdAt.setText("Sent at " + dateText);

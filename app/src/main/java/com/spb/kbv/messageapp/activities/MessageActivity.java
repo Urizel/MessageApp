@@ -81,12 +81,12 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
                     bus.post(new Messages.GetMessageDetailRequest(id));
                 } else {
                     message = new Message(
-                            1,
+                            "1",
                             new GregorianCalendar(),
                             "Short Message",
                             "Long Message",
                             null,
-                            new UserDetails(1, true, "Person", "person", ""),
+                            new UserDetails("1", true, "Person", "person", ""),
                             false,
                             false);
                 }
@@ -138,7 +138,7 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
         defaultResult.putExtra(RESULT_EXTRA_MESSAGE_ID, message.getId());
         setResult(RESULT_OK, defaultResult);
 
-        if (!message.isRead()){
+        if (!message.isRead() && !message.isFromUs()){
             bus.post(new Messages.MarkMessageAsReadRequest(message.getId()));
         }
     }
@@ -251,7 +251,7 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
 
         if (event.operationType == Events.OPERATION_DELETED &&
                 event.entityType == Events.ENTITY_MESSAGE &&
-                event.entityId == currentMessage.getId()) {
+                event.entityId.equals(currentMessage.getId())) {
             closeMessage(REQUEST_IMAGE_DELETED);
         }
     }

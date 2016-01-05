@@ -20,6 +20,8 @@ import com.spb.kbv.messageapp.views.MessagesAdapter;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class ContactInfoActivity extends BaseAuthenticatedActivity implements MessagesAdapter.OnMessageClickListener {
     public static final String EXTRA_USER_DETAILS = "EXTRA_USER_DETAILS";
@@ -41,7 +43,7 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
 
         userDetails = getIntent().getParcelableExtra(EXTRA_USER_DETAILS);
         if (userDetails.getDisplayName() == null) {
-            userDetails = new UserDetails(1, true, "A contact", "a_contact", "http://www.gravatar.com/avatar/1.jpg");
+            userDetails = new UserDetails("1", true, "A contact", "a_contact", "http://www.gravatar.com/avatar/1.jpg");
         }
 
         getSupportActionBar().setTitle(userDetails.getDisplayName());
@@ -67,7 +69,7 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
 
         recyclerView.setAdapter(adapter);
 
-        scheduler.postEveryMilliseconds(new Messages.SearchMessagesRequest(userDetails.getId(), true, true), 1000 * 60 * 3);
+        scheduler.postEveryMilliseconds(new Messages.SearchMessagesRequest(userDetails.getUsername(), true, true), 1000 * 60 * 3);
     }
 
     @Override
@@ -93,6 +95,15 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
                 adapter.notifyItemRangeRemoved(0, oldSize);
 
                 messages.addAll(respones.messages);
+
+                Collections.sort(messages, new Comparator<Message>() {
+                    @Override
+                    public int compare(Message o2, Message o1) {
+                        return Long.toString(o1.getCreatedAt().getTimeInMillis())
+                                .compareTo(Long.toString(o2.getCreatedAt().getTimeInMillis()));
+                    }
+                });
+
                 adapter.notifyItemRangeInserted(0, messages.size());
             }
         });
@@ -160,13 +171,13 @@ public class ContactInfoActivity extends BaseAuthenticatedActivity implements Me
             bus.post(new Messages.SearchMessagesRequest(userDetails.getId(), true, true));
         }
         if (requestCode == REQUEST_SHOW_MESSAGE && data != null){
-            int messageId = data.getIntExtra(MessageActivity.RESULT_EXTRA_MESSAGE_ID, -1);
-            if (messageId == -1) {
+            String messageId = data.getStringExtra(MessageActivity.RESULT_EXTRA_MESSAGE_ID/*, "-1"*/);
+            if (messageId.isEmpty()) {
                 return;
             }
             for (int i = 0; i < messages.size(); i++){
                 Message message = messages.get(i);
-                if (message.getId() == messageId){
+                if (message.getId().equals(messageId)){
                     if (resultCode == MessageActivity.REQUEST_IMAGE_DELETED){
                         messages.remove(message);
                     } else {

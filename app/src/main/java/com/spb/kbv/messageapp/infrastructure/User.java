@@ -1,7 +1,7 @@
 package com.spb.kbv.messageapp.infrastructure;
 
 public class User {
-    private int id;
+    private String id;
     private String userName;
     private String displayName;
     private String avatarUrl;
@@ -10,11 +10,11 @@ public class User {
     private String email;
 
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 
-    public void setId(int id) {
+    public void setId(String id) {
         this.id = id;
     }
 

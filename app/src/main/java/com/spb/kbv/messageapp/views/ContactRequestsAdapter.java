@@ -45,10 +45,10 @@ public class ContactRequestsAdapter extends ArrayAdapter<ContactRequest> {
         }
 
 
-        String createdAt = "2222";/*DateUtils.formatDateTime(
+        String createdAt = DateUtils.formatDateTime(
                 getContext(),
                 request.getCreatedAt().getTimeInMillis(),
-                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);*/
+                DateUtils.FORMAT_SHOW_DATE | DateUtils.FORMAT_SHOW_TIME);
 
         if (request.isFromUs()){
             holder.createdAt.setText("Sent at " + createdAt);

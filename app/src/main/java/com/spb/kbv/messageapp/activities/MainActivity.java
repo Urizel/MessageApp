@@ -24,6 +24,8 @@ import com.spb.kbv.messageapp.views.MainNavDrawer;
 import com.squareup.otto.Subscribe;
 import com.squareup.picasso.Picasso;
 
+import java.util.Collections;
+import java.util.Comparator;
 import java.util.List;
 
 
@@ -113,6 +115,14 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
                 }
                 messages.clear();
                 messages.addAll(response.messages);
+
+                Collections.sort(messages, new Comparator<Message>() {
+                    @Override
+                    public int compare(Message o2, Message o1) {
+                        return Long.toString(o1.getCreatedAt().getTimeInMillis())
+                                .compareTo(Long.toString(o2.getCreatedAt().getTimeInMillis()));
+                    }
+                });
                 adapter.notifyDataSetChanged();
             }
         });
@@ -147,8 +157,8 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
     @Override
     protected void onActivityResult(int requestCode, int resultCode, Intent data) {
         if (requestCode == REQUEST_SHOW_MESSAGE && data != null){
-            int messageId = data.getIntExtra(MessageActivity.RESULT_EXTRA_MESSAGE_ID, -1);
-            if (messageId == -1) {
+            String messageId = data.getStringExtra(MessageActivity.RESULT_EXTRA_MESSAGE_ID);
+            if (messageId.isEmpty()) {
                 return;
             }
             for (int i = 0; i < messages.size(); i++){
@@ -233,7 +243,7 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
                         bus.post(new Contacts.GetContactRequestRequest(false));
                     } else {
                         for (int i = 0; i < contactRequests.size(); i++){
-                            if (contactRequests.get(i).getUser().getId() == event.entityId){
+                            if (contactRequests.get(i).getUser().getId().equals(event.entityId)){
                                 contactRequests.remove(i);
                                 adapter.notifyDataSetChanged();
                                 break;

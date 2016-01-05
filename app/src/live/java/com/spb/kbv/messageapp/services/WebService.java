@@ -104,15 +104,15 @@ public interface WebService {
             @Part("photo")TypedFile photo,
             Callback<Messages.SendMessageResponse> callback);
 
-    @DELETE("/api/v1/messages/{id}")
-    void deleteMessage(@Path("id") int messageId, Callback<Messages.DeleteMessageResponse> callback);
+    @DELETE("/api/messages/{id}")
+    void deleteMessage(@Path("id") String messageId, Callback<Messages.DeleteMessageResponse> callback);
 
-    @PUT("/api/v1/messages/{id}/is-read")
-    void markMessageAsRead(@Path("id") int messageId, Callback<Messages.MarkMessageAsReadResponse> callback);
+    @PUT("/api/messages/{id}/is-read")
+    void markMessageAsRead(@Path("id") String messageId, Callback<Messages.MarkMessageAsReadResponse> callback);
 
-    @GET("/api/v1/messages")
+    @GET("/api/messages")
     void searchMessages(
-        @Query("contactId") int from,
+        @Query("contactId") String from,
         @Query("includeSent") boolean includeSent,
         @Query("includeReceived") boolean includeReceived,
         Callback<Messages.SearchMessageResponse> callback);

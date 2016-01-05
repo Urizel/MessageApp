@@ -7,7 +7,7 @@ import java.util.Calendar;
 import java.util.GregorianCalendar;
 
 public class Message implements Parcelable{
-    private int id;
+    private String _id;
     private Calendar createdAt;
     private String shortMessage;
     private String longMessage;
@@ -18,7 +18,7 @@ public class Message implements Parcelable{
     private boolean isRead;
 
     public Message(
-            int id,
+            String id,
             Calendar createdAt,
             String shortMessage,
             String longMessage,
@@ -26,7 +26,7 @@ public class Message implements Parcelable{
             UserDetails otherUser,
             boolean ifFromUs,
             boolean isRead) {
-        this.id = id;
+        this._id = id;
         this.createdAt = createdAt;
         this.shortMessage = shortMessage;
         this.longMessage = longMessage;
@@ -37,7 +37,7 @@ public class Message implements Parcelable{
     }
 
     private Message (Parcel parcel){
-        id = parcel.readInt();
+        _id = parcel.readString();
         createdAt = new GregorianCalendar();
         createdAt.setTimeInMillis(parcel.readLong());
         shortMessage = parcel.readString();
@@ -50,7 +50,7 @@ public class Message implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel destination, int flags) {
-        destination.writeInt(id);
+        destination.writeString(_id);
         destination.writeLong(createdAt.getTimeInMillis());
         destination.writeString(shortMessage);
         destination.writeString(longMessage);
@@ -66,8 +66,8 @@ public class Message implements Parcelable{
         return 0;
     }
 
-    public int getId() {
-        return id;
+    public String getId() {
+        return _id;
     }
 
     public Calendar getCreatedAt() {
@@ -108,6 +108,10 @@ public class Message implements Parcelable{
 
     public void setIsSelected(boolean isSelected) {
         this.isSelected = isSelected;
+    }
+
+    public void setIsFromUs(boolean isFromUs) {
+        this.isFromUs = isFromUs;
     }
 
     public static final Creator<Message> CREATOR = new Creator<Message>() {

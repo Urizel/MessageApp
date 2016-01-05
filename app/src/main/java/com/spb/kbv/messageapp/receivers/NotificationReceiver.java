@@ -19,14 +19,19 @@ import com.spb.kbv.messageapp.infrastructure.MessageApplication;
 import com.spb.kbv.messageapp.services.Events;
 import com.squareup.otto.Bus;
 
+import java.util.Date;
+
 public class NotificationReceiver extends BroadcastReceiver {
     private static final String TAG = "NotificationReceiver";
 
     private Auth auth;
     private MessageApplication application;
+    private Long notificationId;
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        notificationId = new Date().getTime();
+        Log.d("myLogs", " notification ID === " + notificationId);
         application = (MessageApplication) context.getApplicationContext();
         auth = application.getAuth();
         Bus bus = application.getBus();
@@ -34,8 +39,8 @@ public class NotificationReceiver extends BroadcastReceiver {
         try {
             int operation = Integer.parseInt(intent.getStringExtra("operation"));
             int type = Integer.parseInt(intent.getStringExtra("type"));
-            int entityId = Integer.parseInt(intent.getStringExtra("entityId"));
-            int entityOwnerId = Integer.parseInt(intent.getStringExtra("entityOwnerId"));
+            String entityId = intent.getStringExtra("entityId");
+            String entityOwnerId = intent.getStringExtra("entityOwnerId");
             String entityOwnerName = intent.getStringExtra("entityOwnerName");
 
             Events.OnNotificationReceivedEvent event = new Events.OnNotificationReceivedEvent(
@@ -74,13 +79,13 @@ public class NotificationReceiver extends BroadcastReceiver {
     }
 
     private void sendMessageNotification(Events.OnNotificationReceivedEvent event) {
-        if (event.operationType == Events.OPERATION_DELETED || event.entityOwnerId == auth.getUser().getId()) {
+        if (event.operationType == Events.OPERATION_DELETED || event.entityOwnerId.equals(auth.getUser().getId())) {
             return;
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(application)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(event.entityOwnerName + " sent you a messgae request")
+                .setContentTitle(event.entityOwnerName + " sent you a message request")
                 .setContentText("Click here to view it");
 
         Intent intent = new Intent(application, MessageActivity.class);
@@ -88,7 +93,7 @@ public class NotificationReceiver extends BroadcastReceiver {
         sendNotification(event.entityId, builder, intent);
     }
 
-    private void sendNotification(int entityId, NotificationCompat.Builder builder, Intent intent) {
+    private void sendNotification(String entityId, NotificationCompat.Builder builder, Intent intent) {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(application);
         stackBuilder.addParentStack(MessageActivity.class);
         stackBuilder.addNextIntent(intent);
@@ -100,6 +105,6 @@ public class NotificationReceiver extends BroadcastReceiver {
         notification.flags |= Notification.FLAG_AUTO_CANCEL;
 
         NotificationManager notificationManager = (NotificationManager) application.getSystemService(Context.NOTIFICATION_SERVICE);
-        notificationManager.notify(entityId, notification);
+        notificationManager.notify((int)(long)(notificationId), notification);
     }
 }

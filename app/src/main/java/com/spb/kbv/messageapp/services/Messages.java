@@ -15,30 +15,30 @@ public final class Messages {
     }
 
     public static class DeleteMessageRequest {
-        public int messageId;
+        public String messageId;
 
-        public DeleteMessageRequest(int messageId) {
+        public DeleteMessageRequest(String messageId) {
             this.messageId = messageId;
         }
     }
 
     public static class DeleteMessageResponse extends ServiceResponse{
-        public int messageId;
+        public String messageId;
     }
 
     public static class SearchMessagesRequest {
-        public int fromContactId;
+        public String fromContactId;
         public boolean includeSentMessages;
         public boolean includeReceivedMessages;
 
-        public SearchMessagesRequest(int fromContactId, boolean includeSentMessages, boolean includeReceivedMessages) {
+        public SearchMessagesRequest(String fromContactId, boolean includeSentMessages, boolean includeReceivedMessages) {
             this.fromContactId = fromContactId;
             this.includeSentMessages = includeSentMessages;
             this.includeReceivedMessages = includeReceivedMessages;
         }
 
         public SearchMessagesRequest(boolean includeSentMessages, boolean includeReceivedMessages) {
-            this.fromContactId = -1;
+            this.fromContactId = "";
             this.includeSentMessages = includeSentMessages;
             this.includeReceivedMessages = includeReceivedMessages;
         }
@@ -116,9 +116,9 @@ public final class Messages {
     }
 
     public static class MarkMessageAsReadRequest{
-        public int messageId;
+        public String messageId;
 
-        public MarkMessageAsReadRequest(int messageId) {
+        public MarkMessageAsReadRequest(String messageId) {
             this.messageId = messageId;
         }
     }

@@ -1,5 +1,7 @@
 package com.spb.kbv.messageapp.services;
 
+import android.util.Log;
+
 import com.spb.kbv.messageapp.infrastructure.MessageApplication;
 import com.spb.kbv.messageapp.infrastructure.RetrofitCallbackPost;
 import com.squareup.otto.Subscribe;
@@ -26,13 +28,15 @@ public class LiveMessageService extends BaseLiveService {
 
     @Subscribe
     public void searchMessages(Messages.SearchMessagesRequest request) {
-        if (request.fromContactId != -1){
+        if (!request.fromContactId.equals("")){
+            Log.d("myLogs", "=======request.fromContactId != null====");
             api.searchMessages(
                     request.fromContactId,
                     request.includeSentMessages,
                     request.includeReceivedMessages,
                     new RetrofitCallbackPost<>(Messages.SearchMessageResponse.class, bus));
         } else {
+            Log.d("myLogs", "=======request.fromContactId = null====");
             api.searchMessages(
                     request.includeSentMessages,
                     request.includeReceivedMessages,

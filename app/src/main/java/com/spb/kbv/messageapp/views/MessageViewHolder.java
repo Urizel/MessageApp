@@ -4,6 +4,7 @@ import android.content.Context;
 import android.support.v7.widget.CardView;
 import android.support.v7.widget.RecyclerView;
 import android.text.format.DateUtils;
+import android.util.Log;
 import android.view.View;
 import android.widget.ImageView;
 import android.widget.TextView;
@@ -39,7 +40,11 @@ public class MessageViewHolder extends RecyclerView.ViewHolder{
     public void populate(BaseActivity activity, Message message){
         itemView.setTag(message);
 
-        activity.getMessageAppApplication().getAuthedPicasso().load(message.getOtherUser().getAvatarUrl()).into(avatar);
+        if (message.getOtherUser().getAvatarUrl().isEmpty()){
+            avatar.setImageResource(R.drawable.ic_action_person);
+        } else {
+            activity.getMessageAppApplication().getAuthedPicasso().load(message.getOtherUser().getAvatarUrl()).into(avatar);
+        }
 
         String createdAt = DateUtils.formatDateTime(
                 activity.getApplicationContext(),
@@ -55,9 +60,11 @@ public class MessageViewHolder extends RecyclerView.ViewHolder{
             colorResourceId = R.color.list_item_message_background_selected;
             cardView.setCardElevation(5);
         } else if (message.isRead()){
+            Log.d("myLogs", " ViewHolder --- Message IS READ " + message.isRead());
             colorResourceId = R.color.list_item_message_background;
             cardView.setCardElevation(2);
         } else {
+            Log.d("myLogs", " ViewHolder --- Message IS NOT READ " + message.isRead());
             colorResourceId = R.color.list_item_message_background_unread;
             cardView.setCardElevation(3);
         }

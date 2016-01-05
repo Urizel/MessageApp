@@ -4,13 +4,13 @@ import android.os.Parcel;
 import android.os.Parcelable;
 
 public class UserDetails implements Parcelable{
-    private final int id;
+    private final String id;
     private final boolean isContact;
     private final String displayName;
     private final String username;
     private final String avatarUrl;
 
-    public UserDetails(int id, boolean isContact, String displayName, String username, String avatarUrl) {
+    public UserDetails(String id, boolean isContact, String displayName, String username, String avatarUrl) {
         this.id = id;
         this.isContact = isContact;
         this.displayName = displayName;
@@ -19,7 +19,7 @@ public class UserDetails implements Parcelable{
     }
 
     private UserDetails(Parcel parcel){
-        id = parcel.readInt();
+        id = parcel.readString();
         isContact = parcel.readByte() == 1;
         displayName = parcel.readString();
         username = parcel.readString();
@@ -33,7 +33,7 @@ public class UserDetails implements Parcelable{
 
     @Override
     public void writeToParcel(Parcel destination, int i) {
-        destination.writeInt(id);
+        destination.writeString(id);
         destination.writeByte((byte) (isContact ? 1 : 0));
         destination.writeString(displayName);
         destination.writeString(username);
@@ -41,7 +41,7 @@ public class UserDetails implements Parcelable{
 
     }
 
-    public int getId() {
+    public String getId() {
         return id;
     }
 

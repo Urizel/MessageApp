@@ -24,7 +24,7 @@ public final class Account {
         @SerializedName("displayName")
         public String displayName;
 
-        public int id;
+        public String id;
 
         @SerializedName("avatarUrl")
         public String avatarUrl;

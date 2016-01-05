@@ -4,6 +4,7 @@ import android.content.Intent;
 import android.content.res.Configuration;
 import android.net.Uri;
 import android.os.Bundle;
+import android.util.Log;
 import android.util.TypedValue;
 import android.view.Menu;
 import android.view.MenuItem;
@@ -164,9 +165,10 @@ public class SendMessageActivity extends BaseAuthenticatedActivity implements Vi
             }).start();
             return;
         }
-
+        response.message.setIsFromUs(true);
         Intent data = new Intent();
         data.putExtra(RESULT_MESSAGE, response.message);
+        Log.d("myLogs", "response.message ID == " + response.message.getId());
 
         setResult(RESULT_OK, data);
         finish();

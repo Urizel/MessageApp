@@ -15,6 +15,9 @@ import com.spb.kbv.messageapp.views.MessagesAdapter;
 import com.squareup.otto.Subscribe;
 
 import java.util.ArrayList;
+import java.util.Calendar;
+import java.util.Collections;
+import java.util.Comparator;
 
 public class SentMessagesActivity extends BaseAuthenticatedActivity implements MessagesAdapter.OnMessageClickListener {
     private static final int REQUEST_VIEW_MESSAGE = 1;
@@ -58,13 +61,13 @@ public class SentMessagesActivity extends BaseAuthenticatedActivity implements M
             return;
         }
 
-        int messageId = data.getIntExtra(MessageActivity.RESULT_EXTRA_MESSAGE_ID, -1);
-        if (messageId == -1){
+        String messageId = data.getStringExtra(MessageActivity.RESULT_EXTRA_MESSAGE_ID);
+        if (messageId.isEmpty()){
             return;
         }
         for (int i = 0; i < messages.size(); i++){
             Message message = messages.get(i);
-            if (message.getId() != messageId){
+            if (!message.getId().equals(messageId)){
                 continue;
             }
 
@@ -84,6 +87,14 @@ public class SentMessagesActivity extends BaseAuthenticatedActivity implements M
         adapter.notifyItemRangeRemoved(0, oldMessagesSize);
 
         messages.addAll(response.messages);
+
+        Collections.sort(messages, new Comparator<Message>() {
+            @Override
+            public int compare(Message o2, Message o1) {
+                return Long.toString(o1.getCreatedAt().getTimeInMillis()).compareTo(Long.toString(o2.getCreatedAt().getTimeInMillis()));
+            }
+        });
+
         adapter.notifyItemRangeInserted(0, messages.size());
         progressFrame.setVisibility(View.GONE);
     }

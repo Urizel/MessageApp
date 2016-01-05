@@ -40,7 +40,7 @@ public  class Module {
 
     private static WebService createWebService(MessageApplication application) {
         Gson gson = new GsonBuilder()
-                .setDateFormat("yyyy-MM-dd'T'HH:mm:ssZ")
+                .setDateFormat(/*"yyyy-MM-dd'T'HH:mm:ssZ"*/"yyyy-MM-dd-HH-mm")
                 .registerTypeAdapter(Calendar.class, new DateDeserializer())
                 /*.setFieldNamingPolicy(FieldNamingPolicy.UPPER_CAMEL_CASE)*/
                 .create();
@@ -96,7 +96,9 @@ public  class Module {
             "yyyy-MM-dd'T'HH:mm:ss:SSS",
             "yyyy-MM-dd'T'HH:mmZ",
             "yyyy-MM-dd'T'HH:mm",
+            "yyyy-MM-dd-HH-mm",
             "yyyy-MM-dd"
+
     };
 
     private static class DateDeserializer implements JsonDeserializer<Calendar>{
