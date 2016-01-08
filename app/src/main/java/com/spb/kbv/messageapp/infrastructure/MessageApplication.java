@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 
 public class MessageApplication extends Application{
-    public static final Uri API_ENDPOINT = Uri.parse(/*"http://yora-playground.3dbuzz.com"*//*"http://192.168.0.101:8888"*/"https://salty-temple-1773.herokuapp.com");
+    public static final Uri API_ENDPOINT = Uri.parse(/*"http://yora-playground.3dbuzz.com"*//*"http://192.168.0.101:8888"*/"http://5ce2135f.ngrok.io");
     public static final String TOKEN = "f2b36dd2a4d84bff90e161de6323efbe";
     private Auth auth;
     private Bus bus;
