@@ -67,7 +67,7 @@ public interface WebService {
                         @Field ("newPassword") String newPassword,
                         /*@Field ("confirmNewPassword") String confirmNewPassword,*/Callback<Account.ChangePasswordResponse> callback);
 
-    @PUT("/api/v1/account/gcm-registration")
+    @PUT("/api/account/gcm-registration")
     void updateGcmRegistration(@Body Account.UpdateGcmRegistrationRequest request,
                                Callback<Account.UpdateGcmRegistrationResponse> callback);
 
@@ -123,8 +123,8 @@ public interface WebService {
             @Query("includeReceived") boolean includeReceived,
             Callback<Messages.SearchMessageResponse> callback);
 
-    @GET("/api/v1/messages/{id}")
-    void getMessageDetails(@Path("id") int id, Callback<Messages.GetMessageDetailResponse> callback);
+    @GET("/api/messages/{id}")
+    void getMessageDetails(@Path("id") String id, Callback<Messages.GetMessageDetailResponse> callback);
 
 
 

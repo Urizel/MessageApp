@@ -27,7 +27,7 @@ public class RegisterGcmFragment extends BaseFragment {
 
     private final static String PROPERTY_REGISTRATION_ID = "REGISTRATION_ID";
     private final static String PROPERTY_APP_VERSION = "APP_VERSION";
-    private static final String SENDER_ID = "1089345951367";
+    private static final String SENDER_ID = "564017263991";
 
     public static RegisterGcmFragment get(GcmRegistrationCallback callback, boolean isNewUser, FragmentManager fragmentManager){
         RegisterGcmFragment fragment = (RegisterGcmFragment) fragmentManager.findFragmentByTag(TAG);
@@ -61,11 +61,12 @@ public class RegisterGcmFragment extends BaseFragment {
             if (registrationId.isEmpty()){
                 doRegistration();
             } else {
-                if (isNewUser){
+                bus.post(new Account.UpdateGcmRegistrationRequest(registrationId));
+                /*if (isNewUser){
                     bus.post(new Account.UpdateGcmRegistrationRequest(registrationId));
                 } else {
                     currentCallback.gcmFinished();
-                }
+                }*/
             }
         } else if (status == PLAY_SERVICES_UNABLABLE){
             currentCallback.gcmFinished();
@@ -104,14 +105,18 @@ public class RegisterGcmFragment extends BaseFragment {
     private String gcmRegistrationId() {
         String registrationId = sharedPreferences.getString(PROPERTY_REGISTRATION_ID, "");
         if (registrationId == null || registrationId.isEmpty()){
+            Log.d("myLogs", "===registrationId.isEmpty in gcmRegistrationId== " + registrationId);
             return "";
         }
 
         int registeredVersion = sharedPreferences.getInt(PROPERTY_APP_VERSION, Integer.MIN_VALUE);
         int currentVersion = getAppVersion();
         if (registeredVersion != currentVersion){
+            Log.d("myLogs", "===registeredVersion != currentVersion== ");
             return "";
         }
+
+        Log.d("myLogs", "===registrationId in gcmRegistrationId== " + registrationId);
 
         return registrationId;
     }
@@ -145,6 +150,7 @@ public class RegisterGcmFragment extends BaseFragment {
     }
 
     private void updateGcmRegistration(String registrationId) {
+        Log.d("myLogs", "===registrationId in doRegistration== " + registrationId);
         SharedPreferences.Editor editor = sharedPreferences.edit();
         editor.putString(PROPERTY_REGISTRATION_ID, registrationId);
         editor.putInt(PROPERTY_APP_VERSION, getAppVersion());
@@ -159,6 +165,7 @@ public class RegisterGcmFragment extends BaseFragment {
 
     @Subscribe
     public void gcmRegistrationUpdated(Account.UpdateGcmRegistrationResponse response) {
+        Log.d("myLogs", "UpdateGcmRegistrationResponse=======");
         if (!response.didSucceed()) {
             response.showErrorToast(getActivity());
 

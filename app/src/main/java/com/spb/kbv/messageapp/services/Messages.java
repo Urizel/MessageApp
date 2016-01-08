@@ -128,9 +128,9 @@ public final class Messages {
     }
 
     public static class GetMessageDetailRequest {
-        public int id;
+        public String id;
 
-        public GetMessageDetailRequest(int id) {
+        public GetMessageDetailRequest(String id) {
             this.id = id;
         }
     }

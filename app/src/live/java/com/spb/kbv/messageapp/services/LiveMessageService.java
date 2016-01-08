@@ -28,7 +28,7 @@ public class LiveMessageService extends BaseLiveService {
 
     @Subscribe
     public void searchMessages(Messages.SearchMessagesRequest request) {
-        if (!request.fromContactId.equals("")){
+        if (request.fromContactId != null && !request.fromContactId.equals("")){
             Log.d("myLogs", "=======request.fromContactId != null====");
             api.searchMessages(
                     request.fromContactId,

@@ -66,7 +66,9 @@ public class NotificationReceiver extends BroadcastReceiver {
     }
 
     private void sendContactRequestNotification(Events.OnNotificationReceivedEvent event) {
-        if (event.operationType == Events.OPERATION_DELETED || event.entityId == auth.getUser().getId()) {
+        Log.d("myLogs", "sendContactRequestNotification========");
+        if (event.operationType == Events.OPERATION_DELETED ||
+                event.entityOwnerName.equals(auth.getUser().getUserName())) {
             return;
         }
 
@@ -75,25 +77,26 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setContentTitle(event.entityOwnerName + " sent you a contact request")
                 .setContentText("Click here to view it");
 
-        sendNotification(event.entityId, builder, new Intent(application, MainActivity.class));
+        sendNotification(/*event.entityId, */builder, new Intent(application, MainActivity.class));
     }
 
     private void sendMessageNotification(Events.OnNotificationReceivedEvent event) {
-        if (event.operationType == Events.OPERATION_DELETED || event.entityOwnerId.equals(auth.getUser().getId())) {
+        if (event.operationType == Events.OPERATION_DELETED ||
+                event.entityOwnerName.equals(auth.getUser().getUserName())) {
             return;
         }
 
         NotificationCompat.Builder builder = new NotificationCompat.Builder(application)
                 .setSmallIcon(R.mipmap.ic_launcher)
-                .setContentTitle(event.entityOwnerName + " sent you a message request")
+                .setContentTitle(event.entityOwnerName + " sent you a message")
                 .setContentText("Click here to view it");
 
         Intent intent = new Intent(application, MessageActivity.class);
         intent.putExtra(MessageActivity.EXTRA_MESSAGE_ID, event.entityId);
-        sendNotification(event.entityId, builder, intent);
+        sendNotification(/*event.entityId, */builder, intent);
     }
 
-    private void sendNotification(String entityId, NotificationCompat.Builder builder, Intent intent) {
+    private void sendNotification(/*String entityId, */NotificationCompat.Builder builder, Intent intent) {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(application);
         stackBuilder.addParentStack(MessageActivity.class);
         stackBuilder.addNextIntent(intent);

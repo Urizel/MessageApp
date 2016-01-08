@@ -75,8 +75,8 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
         if (message == null) {
             message = getIntent().getParcelableExtra(EXTRA_MESSAGE);
             if (message == null){
-                int id = getIntent().getIntExtra(EXTRA_MESSAGE_ID, -1);
-                if (id != -1){
+                String id = getIntent().getStringExtra(EXTRA_MESSAGE_ID);
+                if (id != null/*.equals("")*/){
                     progressFrame.setVisibility(View.VISIBLE);
                     bus.post(new Messages.GetMessageDetailRequest(id));
                 } else {

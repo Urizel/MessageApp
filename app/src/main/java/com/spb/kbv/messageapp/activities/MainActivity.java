@@ -184,7 +184,11 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
 
         UserDetails user = request.getUser();
         displayName.setText(user.getDisplayName());
-        Picasso.with(this).load(user.getAvatarUrl()).into(avatar);
+        if (user.getAvatarUrl().isEmpty()){
+            avatar.setImageResource(R.drawable.ic_action_person);
+        } else {
+            getMessageAppApplication().getAuthedPicasso().load(user.getAvatarUrl()).into(avatar);
+        }
 
         DialogInterface.OnClickListener clickListener = new DialogInterface.OnClickListener() {
             @Override
