@@ -30,8 +30,8 @@ public class NotificationReceiver extends BroadcastReceiver {
 
     @Override
     public void onReceive(Context context, Intent intent) {
+        Log.d("myLogs", "broadcast onReceive");
         notificationId = new Date().getTime();
-        Log.d("myLogs", " notification ID === " + notificationId);
         application = (MessageApplication) context.getApplicationContext();
         auth = application.getAuth();
         Bus bus = application.getBus();
@@ -43,12 +43,14 @@ public class NotificationReceiver extends BroadcastReceiver {
             String entityOwnerId = intent.getStringExtra("entityOwnerId");
             String entityOwnerName = intent.getStringExtra("entityOwnerName");
 
+
+            Log.d("myLogs", "broadcast onReceive entities ==" + entityId + " / " + entityOwnerId + " / " +
+            entityOwnerName + " / " + type);
+
             Events.OnNotificationReceivedEvent event = new Events.OnNotificationReceivedEvent(
                     operation, type, entityId, entityOwnerId, entityOwnerName);
 
-            if (type == Events.ENTITY_CONTACT) {
-                sendContactNotification(event);
-            } else if (type == Events.ENTITY_CONTACT_REQUEST) {
+            if (type == Events.ENTITY_CONTACT_REQUEST) {
                 sendContactRequestNotification(event);
             } else if (type == Events.ENTITY_MESSAGE) {
                 sendMessageNotification(event);
@@ -62,8 +64,6 @@ public class NotificationReceiver extends BroadcastReceiver {
         setResultCode(Activity.RESULT_OK);
     }
 
-    private void sendContactNotification(Events.OnNotificationReceivedEvent event) {
-    }
 
     private void sendContactRequestNotification(Events.OnNotificationReceivedEvent event) {
         Log.d("myLogs", "sendContactRequestNotification========");
@@ -77,7 +77,7 @@ public class NotificationReceiver extends BroadcastReceiver {
                 .setContentTitle(event.entityOwnerName + " sent you a contact request")
                 .setContentText("Click here to view it");
 
-        sendNotification(/*event.entityId, */builder, new Intent(application, MainActivity.class));
+        sendNotification(builder, new Intent(application, MainActivity.class));
     }
 
     private void sendMessageNotification(Events.OnNotificationReceivedEvent event) {
@@ -93,10 +93,10 @@ public class NotificationReceiver extends BroadcastReceiver {
 
         Intent intent = new Intent(application, MessageActivity.class);
         intent.putExtra(MessageActivity.EXTRA_MESSAGE_ID, event.entityId);
-        sendNotification(/*event.entityId, */builder, intent);
+        sendNotification(builder, intent);
     }
 
-    private void sendNotification(/*String entityId, */NotificationCompat.Builder builder, Intent intent) {
+    private void sendNotification(NotificationCompat.Builder builder, Intent intent) {
         TaskStackBuilder stackBuilder = TaskStackBuilder.create(application);
         stackBuilder.addParentStack(MessageActivity.class);
         stackBuilder.addNextIntent(intent);

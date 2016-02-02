@@ -79,7 +79,12 @@ public class SentMessagesActivity extends BaseAuthenticatedActivity implements M
 
     @Subscribe
     public void onMessagesLoaded(Messages.SearchMessageResponse response){
-        response.showErrorToast(this);
+        progressFrame.setVisibility(View.GONE);
+
+        if(!response.didSucceed()){
+            response.showErrorToast(this);
+            return;
+        }
 
 
         int oldMessagesSize = messages.size();
@@ -96,6 +101,6 @@ public class SentMessagesActivity extends BaseAuthenticatedActivity implements M
         });
 
         adapter.notifyItemRangeInserted(0, messages.size());
-        progressFrame.setVisibility(View.GONE);
+
     }
 }

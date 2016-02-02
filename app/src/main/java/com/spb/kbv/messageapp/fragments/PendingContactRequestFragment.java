@@ -32,7 +32,6 @@ public class PendingContactRequestFragment extends BaseFragment {
 
     @Subscribe
     public void onGetContactRequest(final Contacts.GetContactRequestResponse response){
-/*        Log.d("myLogs", " got requests " + response.requests.get(1).getUser().getAvatarUrl());*/
         scheduler.invokeOnResume(Contacts.GetContactRequestResponse.class, new Runnable() {
             @Override
             public void run() {

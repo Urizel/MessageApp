@@ -8,8 +8,7 @@ public final class Events {
     public static final int OPERATION_DELETED = 1;
 
     public static final int ENTITY_CONTACT_REQUEST = 1;
-    public static final int ENTITY_CONTACT = 2;
-    public static final int ENTITY_MESSAGE = 3;
+    public static final int ENTITY_MESSAGE = 2;
 
     public static class OnNotificationReceivedEvent {
         public int operationType;

@@ -83,7 +83,6 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
                     message = new Message(
                             "1",
                             new GregorianCalendar(),
-                            "Short Message",
                             "Long Message",
                             null,
                             new UserDetails("1", true, "Person", "person", ""),
@@ -126,7 +125,6 @@ public class MessageActivity extends BaseAuthenticatedActivity implements View.O
         }
 
         longMessage.setText(message.getLongMessage());
-        shortMessage.setText(message.getShortMessage());
 
         if (message.getImageUrl() != null && !message.getImageUrl().isEmpty()) {
             ImageView image = (ImageView) findViewById(R.id.activity_message_image);

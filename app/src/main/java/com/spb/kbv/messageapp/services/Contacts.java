@@ -35,12 +35,10 @@ public final class Contacts {
     }
 
     public static class SendContactRequestRequest{
-        /*public int userId;*/
         public String username;
 
         public SendContactRequestRequest(String username) {
             this.username = username;
-            /*this.userId = userId;*/
         }
     }
 
@@ -48,12 +46,10 @@ public final class Contacts {
     }
 
     public static class RespondToContactRequestRequest {
-        /*public int contactRequestId;*/
         public String username;
         public boolean accept;
 
-        public RespondToContactRequestRequest(/*int contactRequestId,*/ String username, boolean accept) {
-            /*this.contactRequestId = contactRequestId;*/
+        public RespondToContactRequestRequest(String username, boolean accept) {
             this.username = username;
             this.accept = accept;
         }
@@ -63,7 +59,6 @@ public final class Contacts {
     }
 
     public static class RemoveContactRequest{
-        /*public int contactId;*/
         public String username;
 
         public RemoveContactRequest(String username/*int contactId*/) {
@@ -72,7 +67,6 @@ public final class Contacts {
     }
 
     public static class RemoveContactResponse extends ServiceResponse {
-        /*public int removedContactId;*/
         public String removedContactUsername;
 
     }

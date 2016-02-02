@@ -52,12 +52,6 @@ public  class Module {
                 .setEndpoint(MessageApplication.API_ENDPOINT.toString())
                 .setConverter(new GsonConverter(gson))
                 .setClient(new OkClient(client))
-                /*.setRequestInterceptor(new RequestInterceptor() {
-                    @Override
-                    public void intercept(RequestFacade request) {
-                        request.addHeader("X-Student", MessageApplication.TOKEN);
-                    }
-                })*/
                 .build();
         return adapter.create(WebService.class);
     }
@@ -75,7 +69,7 @@ public  class Module {
             Request request = chain.request();
 
             if (auth.hasAuthToken()) {
-                request = request.newBuilder().addHeader("x-access-token",/* "Bearer " + */auth.getAuthToken()).build();
+                request = request.newBuilder().addHeader("x-access-token",auth.getAuthToken()).build();
             }
 
             Response response = chain.proceed(request);

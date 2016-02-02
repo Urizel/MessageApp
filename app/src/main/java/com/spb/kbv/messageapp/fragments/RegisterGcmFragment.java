@@ -27,7 +27,7 @@ public class RegisterGcmFragment extends BaseFragment {
 
     private final static String PROPERTY_REGISTRATION_ID = "REGISTRATION_ID";
     private final static String PROPERTY_APP_VERSION = "APP_VERSION";
-    private static final String SENDER_ID = "564017263991";
+    private static final String SENDER_ID = "366742344604";
 
     public static RegisterGcmFragment get(GcmRegistrationCallback callback, boolean isNewUser, FragmentManager fragmentManager){
         RegisterGcmFragment fragment = (RegisterGcmFragment) fragmentManager.findFragmentByTag(TAG);
@@ -55,7 +55,6 @@ public class RegisterGcmFragment extends BaseFragment {
 
         int status = checkPlayStatus();
         if (status == PLAY_SERVICES_AVAILABLE) {
-/*            Log.d(TAG, "---gcmRegistrationId()---" + gcmRegistrationId());*/
             String registrationId = gcmRegistrationId();
 
             if (registrationId.isEmpty()){
@@ -118,7 +117,7 @@ public class RegisterGcmFragment extends BaseFragment {
 
         Log.d("myLogs", "===registrationId in gcmRegistrationId== " + registrationId);
 
-        return registrationId;
+        return "";
     }
 
     private int getAppVersion() {
@@ -167,12 +166,14 @@ public class RegisterGcmFragment extends BaseFragment {
     public void gcmRegistrationUpdated(Account.UpdateGcmRegistrationResponse response) {
         Log.d("myLogs", "UpdateGcmRegistrationResponse=======");
         if (!response.didSucceed()) {
+            Log.d("myLogs", "UpdateGcmRegistrationResponse=======  NOT SUCCEED");
             response.showErrorToast(getActivity());
 
             SharedPreferences.Editor editor = sharedPreferences.edit();
             editor.putString(PROPERTY_REGISTRATION_ID, "");
             editor.apply();
         }
+        Log.d("myLogs", "UpdateGcmRegistrationResponse=======  SUCCEED");
 
         currentCallback.gcmFinished();
     }

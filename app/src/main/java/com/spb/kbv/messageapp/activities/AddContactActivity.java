@@ -93,11 +93,7 @@ public class AddContactActivity extends BaseAuthenticatedActivity implements Ada
 
     @Subscribe
     public void onUsersSearched(Contacts.SearchUserResponse response){
-        Log.d("myLogs", "my response");
-        Log.d("myLogs", "my response" + response.users);
-        /*if (!response.users.toString().isEmpty()){
-            Log.d("myLogs", "my response" + response.users.toString());
-        }*/
+
         progressFrame.setVisibility(View.GONE);
 
         if(!response.didSucceed()){
@@ -115,7 +111,6 @@ public class AddContactActivity extends BaseAuthenticatedActivity implements Ada
 
     @Override
     public void onItemClick(AdapterView<?> parent, View view, final int position, long id) {
-        /*Log.d("myLogs", "__________id == " + adapter.getItem(position).getId());*/
         AlertDialog dialog = new AlertDialog.Builder(this)
                 .setPositiveButton("Send Contact Request", new DialogInterface.OnClickListener() {
                     @Override

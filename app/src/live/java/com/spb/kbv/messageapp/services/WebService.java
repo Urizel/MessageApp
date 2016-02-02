@@ -27,8 +27,6 @@ public interface WebService {
     void login(
         @Field("username") String username,
         @Field("password") String password,
-        /*@Field("client_id") String clientId,
-        @Field("grant_type") String grantType,*/
         Callback<LoginResponse> callback);
 
     @POST("/api/v1/account/external/token")
@@ -37,7 +35,7 @@ public interface WebService {
 
     @POST("/api/account")
     @FormUrlEncoded
-    void register (/*@Body Account.RegisterRequest request*/
+    void register (
             @Field("username") String username,
             @Field("email") String email,
             @Field("password") String password,
@@ -51,7 +49,7 @@ public interface WebService {
 
     @PUT("/api/account")
     @FormUrlEncoded
-    void updateProfile(/*@Body Account.UpdateProfileRequest request*/
+    void updateProfile(
             @Field("displayname") String displayname,
             @Field("email") String email,
             Callback<Account.UpdateProfileResponse> callback);
@@ -62,10 +60,9 @@ public interface WebService {
 
     @PUT("/api/password")
     @FormUrlEncoded
-    void updatePassword(/*@Body Account.ChangePasswordRequest request,*/
-                        /*@Field ("currentPassword") String currentPassword,*/
+    void updatePassword(
                         @Field ("newPassword") String newPassword,
-                        /*@Field ("confirmNewPassword") String confirmNewPassword,*/Callback<Account.ChangePasswordResponse> callback);
+                        Callback<Account.ChangePasswordResponse> callback);
 
     @PUT("/api/account/gcm-registration")
     void updateGcmRegistration(@Body Account.UpdateGcmRegistrationRequest request,
@@ -77,13 +74,13 @@ public interface WebService {
     void searchUsers(@Query("query") String query, Callback<Contacts.SearchUserResponse> callback);
 
     @POST("/api/contact-requests/{user}")
-    void sendContactRequest (@Path("user") String username/*int userId*/, Callback<Contacts.SendContactRequestResponse> callback);
+    void sendContactRequest (@Path("user") String username, Callback<Contacts.SendContactRequestResponse> callback);
 
     @PUT("/api/contact-requests/{user}")
-    void respondToContactRequest(@Path("user")String username/*int userId*/, @Body RespondToContactRequest request, Callback<Contacts.RespondToContactRequestResponse> callback);
+    void respondToContactRequest(@Path("user")String username, @Body RespondToContactRequest request, Callback<Contacts.RespondToContactRequestResponse> callback);
 
     @DELETE("/api/contacts/{user}")
-    void removeContact (@Path("user") String username/*int userId*/, Callback<Contacts.RemoveContactResponse> callback);
+    void removeContact (@Path("user") String username, Callback<Contacts.RemoveContactResponse> callback);
 
     @GET("/api/contact-requests/sent")
     void getContactRequestsFromUs(Callback<Contacts.GetContactRequestResponse> callback);

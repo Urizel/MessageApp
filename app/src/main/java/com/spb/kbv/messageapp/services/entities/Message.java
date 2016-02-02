@@ -9,7 +9,6 @@ import java.util.GregorianCalendar;
 public class Message implements Parcelable{
     private String _id;
     private Calendar createdAt;
-    private String shortMessage;
     private String longMessage;
     private String imageUrl;
     private UserDetails otherUser;
@@ -20,7 +19,6 @@ public class Message implements Parcelable{
     public Message(
             String id,
             Calendar createdAt,
-            String shortMessage,
             String longMessage,
             String imageUrl,
             UserDetails otherUser,
@@ -28,7 +26,6 @@ public class Message implements Parcelable{
             boolean isRead) {
         this._id = id;
         this.createdAt = createdAt;
-        this.shortMessage = shortMessage;
         this.longMessage = longMessage;
         this.imageUrl = imageUrl;
         this.otherUser = otherUser;
@@ -40,7 +37,6 @@ public class Message implements Parcelable{
         _id = parcel.readString();
         createdAt = new GregorianCalendar();
         createdAt.setTimeInMillis(parcel.readLong());
-        shortMessage = parcel.readString();
         longMessage = parcel.readString();
         imageUrl = parcel.readString();
         otherUser = (UserDetails) parcel.readParcelable(UserDetails.class.getClassLoader());
@@ -52,7 +48,6 @@ public class Message implements Parcelable{
     public void writeToParcel(Parcel destination, int flags) {
         destination.writeString(_id);
         destination.writeLong(createdAt.getTimeInMillis());
-        destination.writeString(shortMessage);
         destination.writeString(longMessage);
         destination.writeString(imageUrl);
         destination.writeParcelable(otherUser, 0);
@@ -72,10 +67,6 @@ public class Message implements Parcelable{
 
     public Calendar getCreatedAt() {
         return createdAt;
-    }
-
-    public String getShortMessage() {
-        return shortMessage;
     }
 
     public String getLongMessage() {

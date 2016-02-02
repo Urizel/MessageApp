@@ -16,7 +16,7 @@ import com.squareup.picasso.Picasso;
 import java.io.IOException;
 
 public class MessageApplication extends Application{
-    public static final Uri API_ENDPOINT = Uri.parse(/*"http://yora-playground.3dbuzz.com"*//*"http://192.168.0.101:8888"*/"http://5ce2135f.ngrok.io");
+    public static final Uri API_ENDPOINT = Uri.parse(/*"http://10.208.160.100:8080"*/"http://messageapp.azurewebsites.net");
     public static final String TOKEN = "f2b36dd2a4d84bff90e161de6323efbe";
     private Auth auth;
     private Bus bus;
@@ -41,10 +41,7 @@ public class MessageApplication extends Application{
             public Response intercept(Chain chain) throws IOException {
                 Log.d("myLogs", "token in createPicasso " + getAuth().getAuthToken());
                 Request newRequest = chain.request().newBuilder()
-                        .addHeader(/*"Authorization", "Bearer " + getAuth().getAuthToken()*/
-                                "x-access-token", /*"Bearer " +*/ getAuth().getAuthToken())
-
-                        /*.addHeader("X-Student", TOKEN)*/
+                        .addHeader("x-access-token", getAuth().getAuthToken())
                         .build();
 
                 return chain.proceed(newRequest);

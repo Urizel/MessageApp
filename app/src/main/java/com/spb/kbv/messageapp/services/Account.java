@@ -29,9 +29,6 @@ public final class Account {
         @SerializedName("avatarUrl")
         public String avatarUrl;
 
-        /*public String userName;*/
-        /*public String email;*/
-        /*public String authToken;*/
         public boolean hasPassword;
     }
 
@@ -57,39 +54,21 @@ public final class Account {
     }
 
     public static class LoginWithLocalTokenResponse extends UserResponse {
-
-       /* @SerializedName("username")
-        public String username;
-
-        @SerializedName("email")
-        public String email;*/
     }
 
     public static class RegisterRequest {
         public String userName;
         public String email;
         public String password;
-        /*public String clientId;*/
 
         public RegisterRequest(String userName, String email, String password) {
             this.userName = userName;
             this.email = email;
             this.password = password;
-            /*clientId = "android";*/
         }
     }
 
     public static class RegisterResponse extends UserResponse {
-
-        /*@SerializedName("username")
-        public String username;
-
-        @SerializedName("email")
-        public String email;
-
-        @SerializedName("token")
-        public String token;*/
-
     }
 
     public static class RegisterWithExternalTokenRequest {
@@ -161,14 +140,10 @@ public final class Account {
     }
 
     public static class ChangePasswordRequest {
-        /*public String currentPassword;*/
         public String newPassword;
-        /*public String confirmNewPassword;*/
 
-        public ChangePasswordRequest(/*String currentPassword, */String newPassword/*, String confirmNewPassword*/){
-            /*this.currentPassword = currentPassword;*/
+        public ChangePasswordRequest(String newPassword){
             this.newPassword = newPassword;
-            /*this.confirmNewPassword = confirmNewPassword;*/
         }
 
     }

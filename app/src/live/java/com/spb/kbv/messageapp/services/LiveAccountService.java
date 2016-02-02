@@ -30,9 +30,6 @@ public class LiveAccountService extends BaseLiveService {
             @Override
             protected void onResponse(Account.RegisterResponse registerResponse) {
                 if (registerResponse.didSucceed()) {
-                    Log.d("myLogs", "success " + registerResponse.authToken + " / " + registerResponse.userName + " / " + registerResponse.email);
-
-                    /*registerResponse.displayName = registerResponse.userName;*/
                     loginUser(registerResponse);
                 }
 
@@ -47,8 +44,6 @@ public class LiveAccountService extends BaseLiveService {
         api.login(
                 request.userName,
                 request.password,
-              /*  "android",
-                "password",*/
                 new RetrofitCallback<WebService.LoginResponse>(WebService.LoginResponse.class) {
                     @Override
                     protected void onResponse(WebService.LoginResponse loginResponse) {
@@ -60,12 +55,10 @@ public class LiveAccountService extends BaseLiveService {
                         }
 
                         auth.setAuthToken(loginResponse.token);
-                        Log.d("myLogs", " TOKEN in logWUN " + loginResponse.token);
                         api.getAccount(new RetrofitCallback<Account.LoginWithLocalTokenResponse>(Account.LoginWithLocalTokenResponse.class) {
                             @Override
                             protected void onResponse(Account.LoginWithLocalTokenResponse loginWithLocalTokenResponse) {
                                 if (!loginWithLocalTokenResponse.didSucceed()){
-                                    Log.d("miLogs", " loginWithLocalTokenResponse not succeed");
                                     Account.LoginWithUsernameResponse response = new Account.LoginWithUsernameResponse();
                                     response.setOperationError(loginWithLocalTokenResponse.getOperationError());
                                     bus.post(response);
@@ -112,7 +105,6 @@ public class LiveAccountService extends BaseLiveService {
                 new RetrofitCallbackPost<Account.ChangeAvatarResponse>(Account.ChangeAvatarResponse.class, bus) {
                     @Override
                     protected void onResponse(Account.ChangeAvatarResponse response) {
-                        Log.d("myLogs", " uri : " + response.avatarUrl);
                         User user = auth.getUser();
                         user.setAvatarUrl(response.avatarUrl);
                         super.onResponse(response);
@@ -124,13 +116,12 @@ public class LiveAccountService extends BaseLiveService {
 
     @Subscribe
     public void changePassword(Account.ChangePasswordRequest request) {
-        api.updatePassword(/*request.currentPassword,*/
+        api.updatePassword(
         request.newPassword,
-        /*request.confirmNewPassword,*/ new RetrofitCallbackPost<Account.ChangePasswordResponse>(Account.ChangePasswordResponse.class, bus) {
+        new RetrofitCallbackPost<Account.ChangePasswordResponse>(Account.ChangePasswordResponse.class, bus) {
             @Override
             protected void onResponse(Account.ChangePasswordResponse response) {
                 if (response.didSucceed()) {
-                    /*auth.getUser().setHasPassword(true);*/
                 }
                 super.onResponse(response);
             }
@@ -173,10 +164,8 @@ public class LiveAccountService extends BaseLiveService {
     protected void loginUser(Account.UserResponse response) {
         if (response.authToken != null && !response.authToken.isEmpty()) {
             auth.setAuthToken(response.authToken);
-            Log.d("myLogs", response.authToken);
         }
 
-        Log.d("myLogs", response.displayName + " / " + response.userName + " / " + response.email);
         User user = auth.getUser();
         user.setId(response.id);
         user.setDisplayName(response.displayName);

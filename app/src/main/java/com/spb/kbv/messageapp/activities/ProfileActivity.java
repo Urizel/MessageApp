@@ -154,9 +154,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         } else if (requestCode == Crop.REQUEST_CROP){
             avatarProgressFrame.setVisibility(View.VISIBLE);
             bus.post(new Account.ChangeAvatarRequest(Uri.fromFile(tempOutputFile)));
-
-            /*avatarView.setImageURI(null);
-            avatarView.setImageURI(Uri.fromFile(tempOutputFile));*/
         }
     }
 
@@ -179,18 +176,9 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
         setProgressBarVisible(false);
     }
 
-   /* @Subscribe
-    public void onAvatarUpdateFromEventForExample(Account.AvatarUpdateEvent event){
-        avatarView.setImageURI(null);
-        avatarView.setImageURI(event.uri);
-    }*/
-
     @Subscribe
     public void onUserDetailsUpdated(Account.UserDetailsUpdateEvent event){
         getSupportActionBar().setTitle(event.user.getDisplayName());
-        Log.d("myLogs", "in UserDetailsUpdateEvent url = " + event.user.getAvatarUrl());
-        /*Picasso.with(this).load(event.user.getAvatarUrl()).into(avatarView);*/
-        /*avatarView.setImageURI(null);*/
         application.getAuthedPicasso().load(event.user.getAvatarUrl()).skipMemoryCache().into(avatarView);
 
     }
@@ -276,10 +264,6 @@ public class ProfileActivity extends BaseAuthenticatedActivity implements View.O
                 bus.post(new Account.UpdateProfileRequest(
                         displayNameText.getText().toString(),
                         emailText.getText().toString()));
-                /*User user = application.getAuth().getUser();
-                user.setDisplayName(displayNameText.getText().toString());
-                user.setEmail(emailText.getText().toString());
-                setTitleToActionBar();*/
                 return true;
             }
 

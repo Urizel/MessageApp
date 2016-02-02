@@ -21,7 +21,7 @@ public class LiveMessageService extends BaseLiveService {
     public void sendMessage(Messages.SendMessageRequest request){
         api.sendMessgaes(
                 new TypedString(request.getMessage()),
-                new TypedString(/*Integer.toString(*/request.getRecipient().getUsername()/*getId())*/),
+                new TypedString(request.getRecipient().getUsername()),
                 new TypedFile("image/jpeg", new File(request.getImagePath().getPath())),
                 new RetrofitCallbackPost<>(Messages.SendMessageResponse.class, bus));
     }
@@ -29,14 +29,12 @@ public class LiveMessageService extends BaseLiveService {
     @Subscribe
     public void searchMessages(Messages.SearchMessagesRequest request) {
         if (request.fromContactId != null && !request.fromContactId.equals("")){
-            Log.d("myLogs", "=======request.fromContactId != null====");
             api.searchMessages(
                     request.fromContactId,
                     request.includeSentMessages,
                     request.includeReceivedMessages,
                     new RetrofitCallbackPost<>(Messages.SearchMessageResponse.class, bus));
         } else {
-            Log.d("myLogs", "=======request.fromContactId = null====");
             api.searchMessages(
                     request.includeSentMessages,
                     request.includeReceivedMessages,

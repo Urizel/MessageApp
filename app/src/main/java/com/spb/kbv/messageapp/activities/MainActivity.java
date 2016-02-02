@@ -103,7 +103,6 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
 
     @Subscribe
     public void onMessagesLoaded(final Messages.SearchMessageResponse response){
-        Log.d("myLogs", "onMessagesLoaded-------- ");
         scheduler.invokeOnResume(response.getClass(), new Runnable() {
             @Override
             public void run() {
@@ -130,7 +129,6 @@ public class MainActivity extends BaseAuthenticatedActivity implements View.OnCl
 
     @Subscribe
     public void onContactRequestsLoaded (final Contacts.GetContactRequestResponse response){
-        /*Log.d("myLogs", "GetContactRequestResponse-------- " + response.requests.get(0).getUser().getUsername());*/
         scheduler.invokeOnResume(response.getClass(), new Runnable() {
             @Override
             public void run() {

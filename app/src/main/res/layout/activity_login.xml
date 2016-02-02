@@ -31,13 +31,15 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Facebook Login"
-            android:id="@+id/activity_login_facebook"/>
+            android:id="@+id/activity_login_facebook"
+            android:visibility="gone"/>
 
         <Button
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:text="Google Login"
-            android:id="@+id/activity_login_google"/>
+            android:id="@+id/activity_login_google"
+            android:visibility="gone"/>
 
 
     </LinearLayout>
